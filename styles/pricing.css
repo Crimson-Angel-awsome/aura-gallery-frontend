@@ -1,0 +1,123 @@
+body {
+  background: #f5f5f7;
+  color: #222;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 220px;
+  background: #fff;
+  padding: 20px;
+  height: 100vh;
+  border-right: 1px solid #eee;
+  position: relative;
+  border-radius: 16px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 10px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.menu {
+  list-style: none;
+}
+
+.menu li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #555;
+  transition: 0.2s;
+}
+
+.menu li span {
+  font-size: 20px;
+}
+
+.menu li:hover {
+  background: #eef0ff;
+  color: royalblue;
+}
+
+.menu li.active {
+  background: #eef0ff;
+  color: royalblue;
+}
+
+.storage {
+  position: absolute;
+  bottom: 20px;
+  font-size: 12px;
+  color: gray;
+}
+
+.main {
+  flex: 1;
+  padding: 20px 40px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;   
+  align-items: center;
+}
+
+.topbar a {
+  text-decoration: none;
+  color: royalblue;
+  font-weight: 500;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.top-actions span {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.upload-btn {
+  background: royalblue;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.hero {
+  margin-top: 30px;
+  padding: 40px;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(to bottom, #1e1e1e, #999);
+}
+
+.hero span {
+  color: royalblue;
+}
+
+.hero p {
+  margin-top: 10px;
+  color:#f5f5f7;
+}
