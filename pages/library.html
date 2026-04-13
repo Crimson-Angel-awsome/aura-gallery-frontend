@@ -80,10 +80,26 @@
   ══════════════════════════════════ -->
   <div class="main">
 
-    <!-- TOPBAR -->
+    <!-- TOPBAR — desktop shows page label + actions; mobile shows app name + edit/camera -->
     <header class="topbar">
+
+      <!-- Desktop left: page label -->
       <div class="topbar-page">Library</div>
+
+      <!-- Mobile left: hamburger + app title (hidden on desktop via CSS) -->
+      <div class="topbar-left-mobile">
+        <button class="mob-menu" title="Menu" aria-label="Open menu">
+          <svg width="20" hmenu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6"  x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <span class="topbar-page" style="display:none">The Gallery</span>
+      </div>
+
       <div class="topbar-right">
+        <!-- Desktop only -->
         <button class="icon-btn notif-btn" title="Notifications">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
@@ -106,6 +122,15 @@
           + Upload
         </button>
         <div class="avatar">AG</div>
+
+        <!-- Mobile only -->
+        <button class="mob-edit-btn">Edit</button>
+        <button class="mob-camera-btn" id="mobCameraBtn" title="Upload photo" aria-label="Upload photo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -115,6 +140,22 @@
       <div class="page-header">
         <h1 class="page-title">Your Library</h1>
         <p class="page-desc">All your photos — organized by when you uploaded them.</p>
+      </div>
+
+      <!-- Mobile storage card (hidden on desktop via mobile CSS) -->
+      <div class="mob-storage-card" id="mobStorageCard">
+        <div class="mob-storage-top">
+          <div>
+            <div class="mob-storage-label">Storage Status</div>
+            <div class="mob-storage-count" id="mobStorageCount">
+              0<span>/ 10 photos used</span>
+            </div>
+          </div>
+          <div class="mob-storage-pct" id="mobStoragePct">0%</div>
+        </div>
+        <div class="mob-bar-track">
+          <div class="mob-bar-fill" id="mobBarFill"></div>
+        </div>
       </div>
 
       <div class="plan-row">
@@ -206,9 +247,54 @@
     </div>
   </div>
 
+  <!-- ══════════════════════════════════
+       MOBILE FAB (floating + button)
+  ══════════════════════════════════ -->
+  <button class="mob-fab" id="mobFab" title="Upload photos" aria-label="Upload photos">+</button>
+
+  <!-- ══════════════════════════════════
+       MOBILE BOTTOM NAVIGATION
+  ══════════════════════════════════ -->
+  <nav class="mob-bottom-nav" aria-label="Main navigation">
+
+    <a href="#" class="mob-nav-item active" data-page="library">
+      <svg viewBox="0 0 24 24" class="fill-active">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+      <span class="mob-nav-label">Home</span>
+    </a>
+
+    <a href="#" class="mob-nav-item" data-page="layout">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      <span class="mob-nav-label">Layout</span>
+    </a>
+
+    <a href="#" class="mob-nav-item" data-page="search">
+      <svg viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+      <span class="mob-nav-label">Search</span>
+    </a>
+
+    <a href="#" class="mob-nav-item" data-page="profile">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+      <span class="mob-nav-label">Profile</span>
+    </a>
+
+  </nav>
+
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
-  <script src="library.js"></script>
+  <script src="/scripts/library.js"></script>
 </body>
 </html>
