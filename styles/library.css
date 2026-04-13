@@ -1,9 +1,3 @@
-/* ══════════════════════════════════════════
-   Aura Gallery — library.css
-   Pure vanilla CSS, zero dependencies
-   ══════════════════════════════════════════ */
-
-/* ── CSS VARIABLES ── */
 :root {
   --bg:          #f5f3ef;
   --surface:     #ffffff;
@@ -23,8 +17,6 @@
   --shadow-sm:   0 1px 6px rgba(0,0,0,0.07);
   --shadow-md:   0 4px 24px rgba(0,0,0,0.10);
 }
-
-/* ── RESET ── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -43,15 +35,7 @@ html, body {
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; }
 input[type="file"] { display: none; }
-
-/* ══════════════════════════════════════════
-   LAYOUT
-══════════════════════════════════════════ */
 body { display: flex; }
-
-/* ══════════════════════════════════════════
-   SIDEBAR
-══════════════════════════════════════════ */
 .sidebar {
   width: var(--sidebar-w);
   min-height: 100vh;
@@ -65,8 +49,6 @@ body { display: flex; }
   top: 0; left: 0; bottom: 0;
   z-index: 50;
 }
-
-/* Brand */
 .brand {
   display: flex;
   align-items: center;
@@ -99,8 +81,6 @@ body { display: flex; }
   color: var(--text3);
   margin-top: 1px;
 }
-
-/* Nav */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
@@ -133,8 +113,6 @@ body { display: flex; }
   height: 17px;
   flex-shrink: 0;
 }
-
-/* Sidebar storage */
 .sidebar-storage {
   padding-top: 1rem;
   border-top: 1px solid var(--border);
@@ -168,10 +146,6 @@ body { display: flex; }
   font-size: 0.7rem;
   color: var(--text3);
 }
-
-/* ══════════════════════════════════════════
-   MAIN
-══════════════════════════════════════════ */
 .main {
   margin-left: var(--sidebar-w);
   flex: 1;
@@ -180,8 +154,6 @@ body { display: flex; }
   min-height: 100vh;
   overflow: hidden;
 }
-
-/* ── TOPBAR ── */
 .topbar {
   height: var(--topbar-h);
   background: var(--surface);
@@ -258,8 +230,6 @@ body { display: flex; }
   letter-spacing: 0.5px;
   cursor: pointer;
 }
-
-/* ── CONTENT ── */
 .content {
   flex: 1;
   overflow-y: auto;
@@ -270,7 +240,6 @@ body { display: flex; }
 .content::-webkit-scrollbar-track { background: transparent; }
 .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-/* Page header */
 .page-header { margin-bottom: 1.4rem; }
 .page-title {
   font-size: 2rem;
@@ -285,8 +254,6 @@ body { display: flex; }
   color: var(--text2);
   line-height: 1.5;
 }
-
-/* Plan row */
 .plan-row {
   display: flex;
   align-items: center;
@@ -323,16 +290,11 @@ body { display: flex; }
 }
 .btn-outline:hover { background: var(--accent-lt); }
 
-/* ══════════════════════════════════════════
-   PHOTO FEED
-══════════════════════════════════════════ */
 #photoFeed {
   display: flex;
   flex-direction: column;
   gap: 2.25rem;
 }
-
-/* Date group */
 .date-group {}
 .date-label {
   display: flex;
@@ -362,8 +324,6 @@ body { display: flex; }
   text-transform: none;
   letter-spacing: 0;
 }
-
-/* Photo grid */
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
@@ -420,8 +380,6 @@ body { display: flex; }
 }
 .photo-item:hover .photo-del { opacity: 1; }
 .photo-del:hover { background: var(--danger); }
-
-/* Fade-up animation for new photos */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -429,10 +387,6 @@ body { display: flex; }
 .photo-item {
   animation: fadeUp 0.35s ease both;
 }
-
-/* ══════════════════════════════════════════
-   EMPTY STATE
-══════════════════════════════════════════ */
 .empty-state {
   text-align: center;
   padding: 4rem 2rem 2rem;
@@ -460,10 +414,6 @@ body { display: flex; }
   color: var(--text2);
   line-height: 1.55;
 }
-
-/* ══════════════════════════════════════════
-   STORAGE WIDGET
-══════════════════════════════════════════ */
 .storage-widget {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -541,10 +491,6 @@ body { display: flex; }
   color: rgba(255,255,255,0.72);
   line-height: 1.55;
 }
-
-/* ══════════════════════════════════════════
-   LIGHTBOX
-══════════════════════════════════════════ */
 .lightbox {
   display: none;
   position: fixed;
@@ -591,10 +537,6 @@ body { display: flex; }
   color: rgba(255,255,255,0.5);
   letter-spacing: 0.3px;
 }
-
-/* ══════════════════════════════════════════
-   UPGRADE MODAL
-══════════════════════════════════════════ */
 .modal-backdrop {
   display: none;
   position: fixed;
@@ -706,10 +648,6 @@ body { display: flex; }
   font-size: 0.72rem;
   color: var(--text3);
 }
-
-/* ══════════════════════════════════════════
-   TOAST
-══════════════════════════════════════════ */
 .toast {
   position: fixed;
   bottom: 1.5rem;
@@ -730,10 +668,6 @@ body { display: flex; }
 .toast.show    { transform: translateX(-50%) translateY(0); }
 .toast.success { background: var(--success); }
 .toast.error   { background: var(--danger); }
-
-/* ══════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════ */
 .mob-menu,
 .mob-edit-btn,
 .mob-camera-btn,
@@ -742,42 +676,30 @@ body { display: flex; }
 .mob-bottom-nav {
   display: none;
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE VARIABLES
-   Extend the root palette for mobile-only tokens
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
   :root {
     --mob-topbar-h:  54px;
-    --mob-nav-h:     62px;      /* bottom nav bar height           */
-    --mob-padding:   1rem;      /* standard horizontal page padding */
-    --mob-radius:    14px;      /* slightly larger for touch targets */
+    --mob-nav-h:     62px;     
+    --mob-padding:   1rem;      
+    --mob-radius:    14px;     
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   BASE MOBILE LAYOUT  (≤ 700px)
-   Hide sidebar, remove its margin, allow scrolling
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   html, body {
-    overflow: hidden;           /* body itself stays locked        */
+    overflow: hidden;          
   }
 
   body {
-    display: block;             /* stack children vertically       */
+    display: block;             
   }
 
-  /* ── Hide desktop sidebar ── */
+
   .sidebar {
     display: none;
   }
 
-  /* ── Main takes full width ── */
+  
   .main {
     margin-left: 0;
     min-height: 100vh;
@@ -785,12 +707,6 @@ body { display: flex; }
     flex-direction: column;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE TOPBAR
-   Matches: hamburger ☰  |  "The Gallery"  |  Edit  📷+
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .topbar {
@@ -803,14 +719,13 @@ body { display: flex; }
     z-index: 60;
   }
 
-  /* Left side: hamburger + page title */
+ 
   .topbar-left-mobile {
     display: flex;
     align-items: center;
     gap: 0.6rem;
   }
 
-  /* Repurpose the existing .topbar-page as the centred app title */
   .topbar-page {
     font-size: 1.15rem;
     font-weight: 800;
@@ -819,19 +734,16 @@ body { display: flex; }
     color: var(--text);
   }
 
-  /* Right side actions: "Edit" text link + camera icon */
+
   .topbar-right {
     gap: 0.5rem;
   }
-
-  /* Hide desktop-only items inside topbar on mobile */
-  .topbar-right .icon-btn.notif-btn,   /* notification bell  */
-  .topbar-right .avatar,               /* avatar circle      */
-  .topbar-right .upload-btn {          /* full upload button */
+  .topbar-right .icon-btn.notif-btn,   
+  .topbar-right .avatar,               
+  .topbar-right .upload-btn {         
     display: none;
   }
 
-  /* ── Hamburger menu button (mobile-only element) ── */
   .mob-menu {
     display: flex;
     align-items: center;
@@ -845,7 +757,6 @@ body { display: flex; }
     flex-shrink: 0;
   }
 
-  /* ── "Edit" text button (mobile-only element) ── */
   .mob-edit-btn {
     display: flex;
     align-items: center;
@@ -858,7 +769,7 @@ body { display: flex; }
     padding: 0 0.25rem;
   }
 
-  /* ── Camera / upload icon button ── */
+ 
   .mob-camera-btn {
     display: flex;
     align-items: center;
@@ -871,7 +782,7 @@ body { display: flex; }
     position: relative;
   }
 
-  /* "+" badge on camera icon */
+  
   .mob-camera-btn::after {
     content: '+';
     position: absolute;
@@ -890,16 +801,9 @@ body { display: flex; }
     line-height: 1;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE STORAGE STATUS CARD
-   Matches: rounded card at top  "15/20 photos used  75%"
-            with indigo progress bar
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
-  /* Wrapper card — mobile-only element */
+
   .mob-storage-card {
     display: flex;
     flex-direction: column;
@@ -948,7 +852,7 @@ body { display: flex; }
     color: var(--accent);
   }
 
-  /* Re-use the existing bar styles with a fresh track */
+  
   .mob-storage-card .mob-bar-track {
     height: 7px;
     background: #e0dde8;
@@ -963,41 +867,28 @@ body { display: flex; }
     transition: width 0.6s ease;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE CONTENT AREA
-   Padding aware of bottom nav bar
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .content {
     padding: 0.25rem 0 calc(var(--mob-nav-h) + 1.5rem);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    /* Leave horizontal padding to individual sections */
   }
 
-  .content::-webkit-scrollbar { display: none; }   /* cleaner on mobile */
+  .content::-webkit-scrollbar { display: none; }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE PAGE HEADER  ("Today · October 24")
-   Bold left-aligned title, date on the right
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .page-header {
-    display: none;            /* desktop title hidden; replaced per-group */
+    display: none;            
     margin-bottom: 0;
   }
 
   .plan-row {
-    display: none;            /* plan pill hidden on mobile; shown in storage card */
+    display: none;            
   }
 
-  /* Each date-group header row behaves like the image's section header */
+ 
   .date-label {
     display: flex;
     align-items: baseline;
@@ -1011,10 +902,7 @@ body { display: flex; }
     padding: 0 var(--mob-padding);
   }
 
-  /* Remove the desktop rule line */
   .date-label::after { display: none; }
-
-  /* Date pill — e.g. "October 24" — shown on the right */
   .date-count {
     font-size: 0.82rem;
     font-weight: 500;
@@ -1026,17 +914,8 @@ body { display: flex; }
     letter-spacing: 0;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE PHOTO GRID
-   Matches the mixed layout in the screenshot:
-     • First photo in each group = full-width hero
-     • Remaining photos = 2-column grid below
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
-  /* Photo feed gap between date groups */
   #photoFeed {
     gap: 2rem;
     padding-top: 1rem;
@@ -1046,39 +925,26 @@ body { display: flex; }
     display: flex;
     flex-direction: column;
   }
-
-  /* ── Standard 2-col grid ── */
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
     padding: 0 var(--mob-padding);
   }
-
-  /* Every photo item: square, larger radius for mobile */
   .photo-item {
     border-radius: var(--mob-radius);
     aspect-ratio: 1 / 1;
   }
-
-  /* ── HERO: first photo — full width, 16:9 ── */
   .photo-grid .photo-item:first-child {
-    grid-column: 1 / -1;           /* span both columns           */
+    grid-column: 1 / -1;
     aspect-ratio: 16 / 9;
     border-radius: var(--mob-radius);
     margin-bottom: 2px;
   }
-
-  /* When there are 3 photos: hero + 2-col row (already handled) */
-
-  /* When there are 6 photos (Yesterday section in screenshot):
-     3×2 equal grid with no hero */
   .photo-grid.grid-equal .photo-item:first-child {
     grid-column: span 1;
     aspect-ratio: 1 / 1;
   }
-
-  /* Touch-friendly: always show overlay on mobile (no hover) */
   .photo-overlay {
     opacity: 1;
     background: linear-gradient(
@@ -1087,8 +953,6 @@ body { display: flex; }
       rgba(10, 8, 5, 0.38)
     );
   }
-
-  /* Always-visible delete button on mobile (tap to delete) */
   .photo-del {
     opacity: 0.85;
     width: 28px;
@@ -1096,20 +960,12 @@ body { display: flex; }
     top: 8px;
     right: 8px;
   }
-
-  /* Scale effect on tap instead of hover */
   .photo-item:active {
     transform: scale(0.97);
     transition: transform 0.1s ease;
   }
-  .photo-item:hover img { transform: none; }  /* disable hover zoom on touch */
+  .photo-item:hover img { transform: none; }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   FLOATING ACTION BUTTON (FAB)
-   Bottom-right "+" button as shown in the screenshot
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .mob-fab {
@@ -1136,13 +992,6 @@ body { display: flex; }
   .mob-fab:hover   { background: var(--accent-dark); }
   .mob-fab:active  { transform: scale(0.93); }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   BOTTOM NAVIGATION BAR
-   Matches: HOME · LAYOUT · SEARCH · PROFILE
-            with accent-coloured active icon + label
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .mob-bottom-nav {
@@ -1155,7 +1004,7 @@ body { display: flex; }
     background: var(--surface);
     border-top: 1px solid var(--border);
     z-index: 70;
-    padding-bottom: env(safe-area-inset-bottom);  /* notch safety */
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .mob-nav-item {
@@ -1189,42 +1038,22 @@ body { display: flex; }
     text-transform: uppercase;
     letter-spacing: 0.6px;
   }
-
-  /* Active state — matches indigo HOME in the screenshot */
   .mob-nav-item.active {
     color: var(--accent);
   }
-
-  /* Active icon fill for home icon to match solid house shape */
   .mob-nav-item.active svg.fill-active {
     fill: var(--accent);
     stroke: var(--accent);
   }
-
-  /* Tap ripple feel */
   .mob-nav-item:active { opacity: 0.7; }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   HIDE DESKTOP-ONLY WIDGETS ON MOBILE
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
-  /* Bottom storage widget (desktop card) */
   .storage-widget { display: none; }
-
-  /* Empty state gets tighter padding on mobile */
   .empty-state {
     padding: 3rem var(--mob-padding) 1rem;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE LIGHTBOX
-   Full screen takeover on phones
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .lightbox.open {
@@ -1253,12 +1082,6 @@ body { display: flex; }
     text-align: center;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   MOBILE UPGRADE MODAL
-   Slides up from bottom as a bottom sheet
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .modal-backdrop {
@@ -1277,8 +1100,6 @@ body { display: flex; }
     from { transform: translateY(100%); }
     to   { transform: translateY(0); }
   }
-
-  /* Drag handle indicator at top of sheet */
   .modal::before {
     content: '';
     display: block;
@@ -1288,14 +1109,10 @@ body { display: flex; }
     border-radius: 99px;
     margin: 0 auto 1.25rem;
   }
-
-  /* Stack plan cards vertically on small phones */
   .plan-grid {
     grid-template-columns: 1fr;
     gap: 0.6rem;
   }
-
-  /* Each plan card becomes a horizontal row */
   .plan-card {
     display: flex;
     align-items: center;
@@ -1315,11 +1132,6 @@ body { display: flex; }
   .pc-limit { font-size: 0.8rem;  margin-bottom: 0; }
   .pc-price { font-size: 0.78rem; }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   TOAST — keep above bottom nav on mobile
-══════════════════════════════════════════════════════ */
 @media (max-width: 700px) {
 
   .toast {
@@ -1330,12 +1142,6 @@ body { display: flex; }
     text-align: center;
   }
 }
-
-
-/* ══════════════════════════════════════════════════════
-   SMALL PHONE FINE-TUNING  (≤ 380px)
-   e.g. iPhone SE (375px), Galaxy A series
-══════════════════════════════════════════════════════ */
 @media (max-width: 380px) {
 
   .topbar-page { font-size: 1rem; }

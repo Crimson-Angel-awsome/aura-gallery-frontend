@@ -1,30 +1,24 @@
-/* ══════════════════════════════════════════
+/* 
    Aura Gallery — library.js
    Pure vanilla JavaScript, zero dependencies
-   ══════════════════════════════════════════ */
+   */
 
 'use strict';
 
-/* ─────────────────────────────────────────
-   PLAN CONFIG
-───────────────────────────────────────── */
+/* PLAN CONFIG */
 const PLANS = {
   basic:   { label: 'Basic Plan',   limit: 10  },
   premium: { label: 'Premium Plan', limit: 50  },
   diamond: { label: 'Diamond Plan', limit: 100 }
 };
 
-/* ─────────────────────────────────────────
-   STATE
-   photos = [{ id, name, src, uploadedAt }]
-───────────────────────────────────────── */
+/* STATE
+   photos = [{ id, name, src, uploadedAt }] */
 let currentPlan = 'basic';
 let photos      = [];
 let toastTimer  = null;
 
-/* ─────────────────────────────────────────
-   DOM REFS
-───────────────────────────────────────── */
+/* DOM REFS */
 const uploadBtn         = document.getElementById('uploadBtn');
 const fileInput         = document.getElementById('fileInput');
 const photoFeed         = document.getElementById('photoFeed');
@@ -45,18 +39,14 @@ const swFill            = document.getElementById('swFill');
 const swCaption         = document.getElementById('swCaption');
 const planCards         = document.querySelectorAll('.plan-card');
 
-/* ─────────────────────────────────────────
-   INIT
-───────────────────────────────────────── */
+/* INIT */
 function init() {
   loadState();
   bindEvents();
   render();
 }
 
-/* ─────────────────────────────────────────
-   PERSIST — localStorage
-───────────────────────────────────────── */
+/* PERSIST — localStorage */
 function saveState() {
   try {
     localStorage.setItem('ag_plan', currentPlan);
@@ -85,9 +75,7 @@ function loadState() {
   }
 }
 
-/* ─────────────────────────────────────────
-   BIND EVENTS
-───────────────────────────────────────── */
+/* BIND EVENTS */
 function bindEvents() {
   /* Upload button opens file picker */
   uploadBtn.addEventListener('click', function() {
@@ -142,9 +130,7 @@ function bindEvents() {
   });
 }
 
-/* ─────────────────────────────────────────
-   UPLOAD HANDLER
-───────────────────────────────────────── */
+/* UPLOAD HANDLER */
 function handleUpload(files) {
   if (!files || files.length === 0) return;
 
@@ -201,9 +187,7 @@ function handleUpload(files) {
   }
 }
 
-/* ─────────────────────────────────────────
-   DELETE PHOTO
-───────────────────────────────────────── */
+/* DELETE PHOTO */
 function deletePhoto(id) {
   photos = photos.filter(function(p) { return p.id !== id; });
   saveState();
@@ -211,9 +195,7 @@ function deletePhoto(id) {
   showToast('Photo removed.', '');
 }
 
-/* ─────────────────────────────────────────
-   SELECT PLAN
-───────────────────────────────────────── */
+/* SELECT PLAN */
 function selectPlan(plan) {
   if (!PLANS[plan]) return;
 
@@ -233,9 +215,7 @@ function selectPlan(plan) {
   closeModal();
 }
 
-/* ─────────────────────────────────────────
-   DATE GROUPING
-───────────────────────────────────────── */
+/* DATE GROUPING */
 function getDateLabel(date) {
   const now   = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -280,9 +260,7 @@ function formatTime(date) {
   });
 }
 
-/* ─────────────────────────────────────────
-   LIGHTBOX
-───────────────────────────────────────── */
+/* LIGHTBOX */
 function openLightbox(id) {
   let photo = null;
   for (let i = 0; i < photos.length; i++) {
@@ -304,9 +282,7 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-/* ─────────────────────────────────────────
-   MODAL
-───────────────────────────────────────── */
+/* MODAL */
 function openModal() {
   /* Highlight current plan */
   planCards.forEach(function(card) {
@@ -320,9 +296,7 @@ function closeModal() {
   modalBackdrop.classList.remove('open');
 }
 
-/* ─────────────────────────────────────────
-   RENDER
-───────────────────────────────────────── */
+/* RENDER */
 function render() {
   renderPlanPill();
   renderStorageBars();
@@ -411,9 +385,7 @@ function feedClickHandler(e) {
   }
 }
 
-/* ─────────────────────────────────────────
-   TOAST
-───────────────────────────────────────── */
+/* TOAST */
 function showToast(msg, type) {
   toast.textContent = msg;
   toast.className   = 'toast ' + (type || '') + ' show';
@@ -423,9 +395,7 @@ function showToast(msg, type) {
   }, 3000);
 }
 
-/* ─────────────────────────────────────────
-   UTILS
-───────────────────────────────────────── */
+/* UTILS */
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g,  '&amp;')
@@ -435,7 +405,5 @@ function escapeHtml(str) {
     .replace(/'/g,  '&#39;');
 }
 
-/* ─────────────────────────────────────────
-   BOOT
-───────────────────────────────────────── */
+/* BOOT */
 init();
