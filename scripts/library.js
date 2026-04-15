@@ -1,7 +1,7 @@
-/* 
+/* ══════════════════════════════════════════
    Aura Gallery — library.js
    Pure vanilla JavaScript, zero dependencies
-   */
+   ══════════════════════════════════════════ */
 
 'use strict';
 
@@ -38,6 +38,14 @@ const swPct             = document.getElementById('swPct');
 const swFill            = document.getElementById('swFill');
 const swCaption         = document.getElementById('swCaption');
 const planCards         = document.querySelectorAll('.plan-card');
+
+/* Mobile-specific refs */
+const mobFab            = document.getElementById('mobFab');
+const mobCameraBtn      = document.getElementById('mobCameraBtn');
+const mobStorageCount   = document.getElementById('mobStorageCount');
+const mobStoragePct     = document.getElementById('mobStoragePct');
+const mobBarFill        = document.getElementById('mobBarFill');
+const mobNavItems       = document.querySelectorAll('.mob-nav-item');
 
 /* INIT */
 function init() {
@@ -80,6 +88,29 @@ function bindEvents() {
   /* Upload button opens file picker */
   uploadBtn.addEventListener('click', function() {
     fileInput.click();
+  });
+
+  /* Mobile FAB also triggers upload */
+  if (mobFab) {
+    mobFab.addEventListener('click', function() {
+      fileInput.click();
+    });
+  }
+
+  /* Mobile camera button also triggers upload */
+  if (mobCameraBtn) {
+    mobCameraBtn.addEventListener('click', function() {
+      fileInput.click();
+    });
+  }
+
+  /* Mobile bottom nav — highlight active tab */
+  mobNavItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      mobNavItems.forEach(function(n) { n.classList.remove('active'); });
+      item.classList.add('active');
+    });
   });
 
   /* File picker change */
@@ -317,11 +348,22 @@ function renderStorageBars() {
   sidebarFill.style.width  = pct + '%';
   sidebarText.textContent  = used + ' / ' + limit + ' photos';
 
-  /* Bottom widget */
+  /* Bottom desktop widget */
   swPct.innerHTML          = pct + '<sup>%</sup>';
   swFill.style.width       = pct + '%';
   swCaption.textContent    = used + ' of ' + limit + ' photos used.' +
     (pct >= 80 ? ' Consider upgrading.' : '');
+
+  /* Mobile storage card */
+  if (mobStorageCount) {
+    mobStorageCount.innerHTML = used + '<span>/ ' + limit + ' photos used</span>';
+  }
+  if (mobStoragePct) {
+    mobStoragePct.textContent = pct + '%';
+  }
+  if (mobBarFill) {
+    mobBarFill.style.width = pct + '%';
+  }
 }
 
 function renderFeed() {
@@ -337,7 +379,7 @@ function renderFeed() {
   let html   = '';
 
   result.order.forEach(function(label) {
-    var group = result.groups[label];
+    const group = result.groups[label];
     html += '<div class="date-group">';
     html += '<div class="date-label">';
     html += escapeHtml(label);
@@ -371,7 +413,7 @@ function renderFeed() {
 /* Single delegated click handler for the feed */
 function feedClickHandler(e) {
   /* Delete button */
-  var delBtn = e.target.closest('[data-del]');
+  const delBtn = e.target.closest('[data-del]');
   if (delBtn) {
     e.stopPropagation();
     deletePhoto(delBtn.getAttribute('data-del'));
@@ -379,7 +421,7 @@ function feedClickHandler(e) {
   }
 
   /* Photo click → lightbox */
-  var item = e.target.closest('.photo-item');
+  const item = e.target.closest('.photo-item');
   if (item) {
     openLightbox(item.getAttribute('data-id'));
   }
