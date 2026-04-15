@@ -1,11 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura Gallery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="pricing.css" />
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div class="logo">Aura Gallery</div>
+      <div class="nav">
+        <a href="#"><i data-lucide="image"></i>Library</a>
+        <a href="#"><i data-lucide="layers"></i>Collections</a>
+        <a href="#"><i data-lucide="search"></i>Search</a>
+        <a href="#" class="active"><i data-lucide="user"></i>Profile</a>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="topbar">
+        <h3>Upgrade Plan</h3>
+        <button class="btn"><i data-lucide="upload"></i>Upload</button>
+      </div>
+
+      <div class="hero">
+        <h2>Expand your <span>aura</span></h2>
+        <p>Choose a canvas that matches your creative vision.</p>
+      </div>
+
+      <div class="pricing">
+        <div class="card basic">
+          <h4>STARTER</h4>
+          <h3>Basic</h3>
+          <div class="price">$0 <span>/ forever</span></div>
+          <p class="sub">+10 photos included</p>
+
+          <ul class="features">
+            <li><i data-lucide="check-circle"></i>Standard Resolution</li>
+            <li><i data-lucide="check-circle"></i>Public Collections</li>
+            <li class="disabled">
+              <i data-lucide="x-circle"></i>No Batch Uploads
+            </li>
+          </ul>
+
+          <button class="selected">Current Plan</button>
+        </div>
+
+        <div class="card premium">
+          <div class="badge">MOST POPULAR</div>
+          <h4>PRO CURATOR</h4>
+          <h3>Premium</h3>
+          <div class="price">$12 <span>/ month</span></div>
+          <p class="sub">+50 photos included</p>
+
+          <ul class="features">
+            <li><i data-lucide="check-circle"></i>High-Resolution Archive</li>
+            <li><i data-lucide="check-circle"></i>Private Collections</li>
+            <li><i data-lucide="check-circle"></i>Batch Upload Tool</li>
+            <li><i data-lucide="check-circle"></i>Advanced Metadata Edit</li>
+          </ul>
+
+          <button>Upgrade Now</button>
+        </div>
+
+        <div class="card diamond">
+          <h4>INFINITE AURA</h4>
+          <h3>Diamond</h3>
+          <div class="price">$24 <span>/ month</span></div>
+          <p class="sub">+100 photos included</p>
+
+          <ul class="features">
+            <li><i data-lucide="check-circle"></i>Lossless RAW Support</li>
+            <li>
+              <i data-lucide="check-circle"></i>Personal Curator Assistant
+            </li>
+            <li><i data-lucide="check-circle"></i>Custom Portfolio Domain</li>
+            <li><i data-lucide="check-circle"></i>Priority Cloud Storage</li>
+            <li><i data-lucide="check-circle"></i>API Access</li>
+          </ul>
+
+          <button>Go Infinite</button>
+        </div>
+      </div>
+
+      <div class="quality">
+        <div class="quality-text">
+          <h2>Uncompromising Quality</h2>
+          <p>
+            Aura Gallery uses a custom-tuned compression algorithm that
+            preserves the spiritual depth of your captures while ensuring
+            lightning-fast load times for your global audience.
+          </p>
+
+          <div class="stats">
+            <div>
+              <strong>99.9%</strong>
+              <span>UPTIME</span>
+            </div>
+            <div>
+              <strong>256-bit</strong>
+              <span>ENCRYPTION</span>
+            </div>
+            <div>
+              <strong>24/7</strong>
+              <span>CONCIERGE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quality-visual">
+          <div class="glow-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      const buttons = document.querySelectorAll(".card button");
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("selected"));
+          btn.classList.add("selected");
+        });
+      });
+    </script>
+  </body>
 </html>
