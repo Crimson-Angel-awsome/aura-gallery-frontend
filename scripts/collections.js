@@ -6,7 +6,7 @@
 /* ─────────────────────────────────────────
    ENDPOINT CONFIG
 ───────────────────────────────────────── */
-var API = {
+const API = {
   shareCollection: ''   /* POST — generate shareable URL for a collection.
                            e.g. 'https://api.auragallery.com/collections/:id/share'
                            Expected response: { url: 'https://...' }            */
@@ -15,7 +15,7 @@ var API = {
 /* ─────────────────────────────────────────
    PLAN CONFIG (mirrors library)
 ───────────────────────────────────────── */
-var PLANS = {
+const PLANS = {
   basic:   { label: 'Basic Plan',   limit: 10  },
   premium: { label: 'Premium Plan', limit: 50  },
   diamond: { label: 'Diamond Plan', limit: 100 }
@@ -28,60 +28,60 @@ var PLANS = {
      photoIds[], createdAt, modifiedAt
    }
 ───────────────────────────────────────── */
-var currentPlan  = 'basic';
-var photos       = [];          /* from library localStorage */
-var collections  = [];
-var currentFilter = 'all';
-var currentSort   = 'modified';
-var activeColId   = null;       /* id of collection whose context menu is open */
-var editingColId  = null;       /* null = creating, string = renaming */
-var selectedPhotoIds = [];      /* photo ids selected in the picker */
-var currentVisibility = 'private';
-var toastTimer = null;
+let currentPlan  = 'basic';
+let photos       = [];          /* from library localStorage */
+let collections  = [];
+let currentFilter = 'all';
+let currentSort   = 'modified';
+let activeColId   = null;       /* id of collection whose context menu is open */
+let editingColId  = null;       /* null = creating, string = renaming */
+let selectedPhotoIds = [];      /* photo ids selected in the picker */
+let currentVisibility = 'private';
+let toastTimer = null;
 
 /* ─────────────────────────────────────────
    DOM REFS
 ───────────────────────────────────────── */
-var colGrid        = document.getElementById('colGrid');
-var emptyState     = document.getElementById('emptyState');
-var sortSelect     = document.getElementById('sortSelect');
-var filterTabs     = document.querySelectorAll('.filter-tab');
-var createBtn      = document.getElementById('createBtn');
-var createBtnMob   = document.getElementById('createBtnMob');
-var mobFab         = document.getElementById('mobFab');
+const colGrid        = document.getElementById('colGrid');
+const emptyState     = document.getElementById('emptyState');
+const sortSelect     = document.getElementById('sortSelect');
+const filterTabs     = document.querySelectorAll('.filter-tab');
+const createBtn      = document.getElementById('createBtn');
+const createBtnMob   = document.getElementById('createBtnMob');
+const mobFab         = document.getElementById('mobFab');
 
-var createModal      = document.getElementById('createModal');
-var createModalClose = document.getElementById('createModalClose');
-var createModalTitle = document.getElementById('createModalTitle');
-var colNameInput     = document.getElementById('colNameInput');
-var photoPicker      = document.getElementById('photoPicker');
-var photoPickerWrap  = document.getElementById('photoPickerWrap');
-var saveColBtn       = document.getElementById('saveColBtn');
-var visBtns          = document.querySelectorAll('.vis-btn');
+const createModal      = document.getElementById('createModal');
+const createModalClose = document.getElementById('createModalClose');
+const createModalTitle = document.getElementById('createModalTitle');
+const colNameInput     = document.getElementById('colNameInput');
+const photoPicker      = document.getElementById('photoPicker');
+const photoPickerWrap  = document.getElementById('photoPickerWrap');
+const saveColBtn       = document.getElementById('saveColBtn');
+const visBtns          = document.querySelectorAll('.vis-btn');
 
-var colCtxMenu    = document.getElementById('colCtxMenu');
-var ctxRename     = document.getElementById('ctxRename');
-var ctxShare      = document.getElementById('ctxShare');
-var ctxDelete     = document.getElementById('ctxDelete');
+const colCtxMenu    = document.getElementById('colCtxMenu');
+const ctxRename     = document.getElementById('ctxRename');
+const ctxShare      = document.getElementById('ctxShare');
+const ctxDelete     = document.getElementById('ctxDelete');
 
-var modalBackdrop = document.getElementById('modalBackdrop');
-var modalClose    = document.getElementById('modalClose');
-var planCards     = document.querySelectorAll('.plan-card');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalClose    = document.getElementById('modalClose');
+const planCards     = document.querySelectorAll('.plan-card');
 
-var sidebar       = document.getElementById('sidebar');
-var sidebarOverlay= document.getElementById('sidebarOverlay');
-var hamburger     = document.getElementById('hamburger');
-var sidebarClose  = document.getElementById('sidebarClose');
-var toast         = document.getElementById('toast');
+const sidebar       = document.getElementById('sidebar');
+const sidebarOverlay= document.getElementById('sidebarOverlay');
+const hamburger     = document.getElementById('hamburger');
+const sidebarClose  = document.getElementById('sidebarClose');
+const toast         = document.getElementById('toast');
 
-var sidebarFill   = document.getElementById('sidebarStorageFill');
-var sidebarText   = document.getElementById('sidebarStorageText');
-var swPct         = document.getElementById('swPct');
-var swFill        = document.getElementById('swFill');
-var swCaption     = document.getElementById('swCaption');
-var mobStorageCount = document.getElementById('mobStorageCount');
-var mobStoragePct   = document.getElementById('mobStoragePct');
-var mobBarFill      = document.getElementById('mobBarFill');
+const sidebarFill   = document.getElementById('sidebarStorageFill');
+const sidebarText   = document.getElementById('sidebarStorageText');
+const swPct         = document.getElementById('swPct');
+const swFill        = document.getElementById('swFill');
+const swCaption     = document.getElementById('swCaption');
+const mobStorageCount = document.getElementById('mobStorageCount');
+const mobStoragePct   = document.getElementById('mobStoragePct');
+const mobBarFill      = document.getElementById('mobBarFill');
 
 /* ─────────────────────────────────────────
    INIT
@@ -103,11 +103,11 @@ function saveState() {
 
 function loadState() {
   /* Load plan + photos from library storage */
-  var savedPlan = localStorage.getItem('ag_plan');
+  const savedPlan = localStorage.getItem('ag_plan');
   if (savedPlan && PLANS[savedPlan]) currentPlan = savedPlan;
 
   try {
-    var rawPhotos = JSON.parse(localStorage.getItem('ag_photos') || '[]');
+    const rawPhotos = JSON.parse(localStorage.getItem('ag_photos') || '[]');
     photos = rawPhotos.map(function(p) {
       return { id: p.id, name: p.name, src: p.src, uploadedAt: new Date(p.uploadedAt) };
     });
@@ -115,7 +115,7 @@ function loadState() {
 
   /* Load collections */
   try {
-    var rawCols = JSON.parse(localStorage.getItem('ag_collections') || '[]');
+    const rawCols = JSON.parse(localStorage.getItem('ag_collections') || '[]');
     collections = rawCols.map(function(c) {
       return {
         id:         c.id,
@@ -242,7 +242,7 @@ function openCreateModal() {
 }
 
 function openRenameModal(id) {
-  var col = findCollection(id);
+  const col = findCollection(id);
   if (!col) return;
   editingColId  = id;
   selectedPhotoIds = col.photoIds.slice();
@@ -268,14 +268,14 @@ function closeCreateModal() {
 }
 
 function saveCollection() {
-  var name = colNameInput.value.trim();
+  const name = colNameInput.value.trim();
   if (!name) { showToast('Please enter a collection name.', 'error'); colNameInput.focus(); return; }
 
-  var now = new Date();
+  const now = new Date();
 
   if (editingColId) {
     /* Update existing */
-    var col = findCollection(editingColId);
+    const col = findCollection(editingColId);
     if (col) {
       col.name       = name;
       col.visibility = currentVisibility;
@@ -310,9 +310,9 @@ function renderPhotoPicker() {
     return;
   }
 
-  var html = '';
+  let html = '';
   photos.forEach(function(p) {
-    var sel = selectedPhotoIds.indexOf(p.id) !== -1;
+    const sel = selectedPhotoIds.indexOf(p.id) !== -1;
     html += '<div class="picker-thumb' + (sel ? ' selected' : '') + '" data-pick="' + escapeHtml(p.id) + '">';
     html += '<img src="' + p.src + '" alt="' + escapeHtml(p.name) + '" loading="lazy" />';
     html += '</div>';
@@ -320,10 +320,10 @@ function renderPhotoPicker() {
   photoPicker.innerHTML = html;
 
   photoPicker.addEventListener('click', function(e) {
-    var thumb = e.target.closest('[data-pick]');
+    const thumb = e.target.closest('[data-pick]');
     if (!thumb) return;
-    var pid = thumb.getAttribute('data-pick');
-    var idx = selectedPhotoIds.indexOf(pid);
+    const pid = thumb.getAttribute('data-pick');
+    let idx = selectedPhotoIds.indexOf(pid);
     if (idx === -1) selectedPhotoIds.push(pid);
     else            selectedPhotoIds.splice(idx, 1);
     thumb.classList.toggle('selected', idx === -1);
@@ -346,7 +346,7 @@ function deleteCollection(id) {
    SHARE COLLECTION
 ───────────────────────────────────────── */
 function shareCollection(id) {
-  var col = findCollection(id);
+  const col = findCollection(id);
   if (!col) return;
 
   /* ── CLOUD SHARE ──────────────────────────────────────────
@@ -362,7 +362,7 @@ function shareCollection(id) {
      return;
   ─────────────────────────────────────────────────────────── */
 
-  var fallbackUrl = window.location.href.replace('collections.html', '') + 'collection.html?id=' + col.id;
+  const fallbackUrl = window.location.href.replace('collections.html', '') + 'collection.html?id=' + col.id;
   copyToClipboard(fallbackUrl);
   showToast('Share link copied to clipboard!', 'success');
 }
@@ -375,7 +375,7 @@ function openCtxMenu(id, x, y) {
   colCtxMenu.style.left = x + 'px';
   colCtxMenu.style.top  = y + 'px';
   colCtxMenu.classList.add('open');
-  var rect = colCtxMenu.getBoundingClientRect();
+  const rect = colCtxMenu.getBoundingClientRect();
   if (rect.right  > window.innerWidth)  colCtxMenu.style.left = (x - rect.width)  + 'px';
   if (rect.bottom > window.innerHeight) colCtxMenu.style.top  = (y - rect.height) + 'px';
 }
@@ -403,9 +403,9 @@ function render() {
 }
 
 function renderStorageBars() {
-  var limit = PLANS[currentPlan].limit;
-  var used  = photos.length;
-  var pct   = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+  const limit = PLANS[currentPlan].limit;
+  const used  = photos.length;
+  const pct   = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
 
   sidebarFill.style.width = pct + '%';
   sidebarText.textContent = used + ' / ' + limit + ' photos';
@@ -418,7 +418,7 @@ function renderStorageBars() {
 }
 
 function getSortedFiltered() {
-  var list = collections.slice();
+  let list = collections.slice();
 
   /* Filter */
   if (currentFilter !== 'all') {
@@ -449,8 +449,8 @@ function formatDateMeta(col) {
 }
 
 function relativeDate(date) {
-  var now  = new Date();
-  var diff = Math.floor((now - new Date(date)) / 1000);
+  const now  = new Date();
+  const diff = Math.floor((now - new Date(date)) / 1000);
   if (diff < 60)     return 'just now';
   if (diff < 3600)   return Math.floor(diff / 60) + 'm ago';
   if (diff < 86400)  return Math.floor(diff / 3600) + 'h ago';
@@ -459,7 +459,7 @@ function relativeDate(date) {
 }
 
 function renderGrid() {
-  var list = getSortedFiltered();
+  const list = getSortedFiltered();
 
   if (list.length === 0 && collections.length === 0) {
     emptyState.style.display = 'block';
@@ -468,10 +468,10 @@ function renderGrid() {
   }
   emptyState.style.display = 'none';
 
-  var html = '';
+  let html = '';
   list.forEach(function(col, i) {
     /* Get up to 4 photos for mosaic */
-    var thumbPhotos = col.photoIds.slice(0, 4).map(function(pid) {
+    const thumbPhotos = col.photoIds.slice(0, 4).map(function(pid) {
       return photos.find(function(p) { return p.id === pid; }) || null;
     }).filter(Boolean);
 
@@ -479,7 +479,7 @@ function renderGrid() {
 
     /* Mosaic */
     html += '<div class="col-mosaic">';
-    for (var m = 0; m < 4; m++) {
+    for (let m = 0; m < 4; m++) {
       if (thumbPhotos[m]) {
         html += '<img class="col-mosaic-img" src="' + thumbPhotos[m].src + '" alt="" loading="lazy" />';
       } else {
@@ -515,22 +515,22 @@ function renderGrid() {
 
 function gridClickHandler(e) {
   /* Three-dot menu */
-  var menuBtn = e.target.closest('[data-menu-col]');
+  const menuBtn = e.target.closest('[data-menu-col]');
   if (menuBtn) {
     e.stopPropagation();
-    var id   = menuBtn.getAttribute('data-menu-col');
-    var rect = menuBtn.getBoundingClientRect();
+    const id   = menuBtn.getAttribute('data-menu-col');
+    const rect = menuBtn.getBoundingClientRect();
     openCtxMenu(id, rect.left, rect.bottom + 4);
     return;
   }
 
   /* New collection placeholder */
-  var newCard = e.target.closest('#newColCard');
+  const newCard = e.target.closest('#newColCard');
   if (newCard) { openCreateModal(); return; }
 
   /* Collection card click (if ctx menu not open) */
   if (!colCtxMenu.classList.contains('open')) {
-    var card = e.target.closest('.col-card');
+    const card = e.target.closest('.col-card');
     if (card) {
       /* Future: navigate into collection view */
     }
@@ -541,7 +541,7 @@ function gridClickHandler(e) {
    UTILS
 ───────────────────────────────────────── */
 function findCollection(id) {
-  for (var i = 0; i < collections.length; i++) { if (collections[i].id === id) return collections[i]; }
+  for (let i = 0; i < collections.length; i++) { if (collections[i].id === id) return collections[i]; }
   return null;
 }
 
@@ -549,7 +549,7 @@ function copyToClipboard(text) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text);
   } else {
-    var el = document.createElement('textarea');
+    const el = document.createElement('textarea');
     el.value = text; document.body.appendChild(el);
     el.select(); document.execCommand('copy');
     document.body.removeChild(el);
