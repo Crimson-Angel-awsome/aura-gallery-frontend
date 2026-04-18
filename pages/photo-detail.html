@@ -1,11 +1,125 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura Gallery - Misty Morning on the Ridge</title>
+    <link
+      rel="stylesheet"
+      href="/aura-gallery-frontend/styles/photo-detail.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo">Aura <span>Gallery</span></div>
+
+      <div class="nav">
+        <a href="#" class="active"><i class="fas fa-th-large"></i> LIBRARY</a>
+        <a href="#"><i class="fas fa-folder"></i> COLLECTIONS</a>
+        <a href="#"><i class="fas fa-search"></i> SEARCH</a>
+        <a href="#"><i class="fas fa-user"></i> PROFILE</a>
+      </div>
+
+      <div class="storage"><i class="fas fa-cloud"></i> STORAGE: 85% FULL</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <div class="header">
+        <h1>Library / Summer 2024</h1>
+        <div class="header-buttons">
+          <button class="upload-btn">
+            <i class="fas fa-upload"></i> Upload
+          </button>
+          <i
+            class="fas fa-bell"
+            style="font-size: 20px; color: #888; cursor: pointer"
+          ></i>
+          <i
+            class="fas fa-cog"
+            style="font-size: 20px; color: #888; cursor: pointer"
+          ></i>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- Image -->
+        <div class="image-container">
+          <img
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
+            alt="Misty Morning on the Ridge"
+            class="main-image"
+          />
+
+          <!-- Bottom floating bar -->
+          <div class="bottom-bar">
+            <button><i class="fas fa-search-plus"></i></button>
+            <button><i class="fas fa-heart"></i></button>
+            <button><i class="fas fa-edit"></i></button>
+          </div>
+        </div>
+
+        <!-- Details Panel -->
+        <div class="details-panel">
+          <div class="details-header">
+            <div>
+              <div class="details-title">Misty Morning on the Ridge</div>
+              <div class="filename">IMG_2024_082_RAW</div>
+            </div>
+          </div>
+
+          <p class="description">
+            Captured during the early hours of the August solstice. The light
+            hit the fog at precisely the right angle to create these layered
+            prismatic reflections across the water surface.
+          </p>
+
+          <div class="metadata-grid">
+            <div class="meta-box">
+              <div class="meta-label">EXPOSURE</div>
+              <div class="meta-value">1/500s</div>
+            </div>
+            <div class="meta-box">
+              <div class="meta-label">SENSITIVITY</div>
+              <div class="meta-value">ISO 100</div>
+            </div>
+            <div class="meta-box">
+              <div class="meta-label">APERTURE</div>
+              <div class="meta-value">f/2.8</div>
+            </div>
+            <div class="meta-box">
+              <div class="meta-label">FOCAL LENGTH</div>
+              <div class="meta-value">35mm</div>
+            </div>
+          </div>
+
+          <div class="classifications">
+            <h3>CLASSIFICATIONS</h3>
+            <div class="tags">
+              <span class="tag">Landscape</span>
+              <span class="tag">Solitude</span>
+              <span class="tag">Blue Hour</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-share">
+              <i class="fas fa-share"></i> Share Link
+            </button>
+            <button class="btn btn-download">
+              <i class="fas fa-download"></i> Download
+            </button>
+            <button class="btn btn-delete">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
