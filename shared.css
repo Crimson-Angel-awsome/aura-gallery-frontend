@@ -355,7 +355,6 @@ body { display: flex; }
   color: var(--text); cursor: pointer; flex-shrink: 0;
 }
 
-/* MOBILE FAB */
 .mob-fab {
   display: none;
   align-items: center; justify-content: center;

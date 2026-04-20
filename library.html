@@ -9,14 +9,8 @@
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════
-       MOBILE SIDEBAR OVERLAY
-  ══════════════════════════════════════ -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <!-- ══════════════════════════════════════
-       SIDEBAR
-  ══════════════════════════════════════ -->
   <aside class="sidebar" id="sidebar">
     <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">&#10005;</button>
 
@@ -79,7 +73,6 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
 
     <header class="topbar">
@@ -127,7 +120,6 @@
         <p class="page-desc">All your photos — organized by when you uploaded them.</p>
       </div>
 
-      <!-- Mobile storage card -->
       <div class="mob-storage-card" id="mobStorageCard">
         <div class="mob-storage-top">
           <div>
@@ -180,17 +172,14 @@
     </main>
   </div>
 
-  <!-- FILE INPUT -->
   <input type="file" id="fileInput" accept="image/*" multiple />
 
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lb-close" id="lbClose">&#10005;</button>
     <img class="lb-img" id="lbImg" src="" alt="" />
     <div class="lb-meta" id="lbMeta"></div>
   </div>
 
-  <!-- UPGRADE MODAL -->
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
       <button class="modal-close" id="modalClose">&#10005;</button>
@@ -211,7 +200,6 @@
     </div>
   </div>
 
-  <!-- PHOTO CONTEXT MENU -->
   <div class="ctx-menu" id="photoCtxMenu">
     <button class="ctx-item ctx-share" id="ctxShare">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -231,10 +219,8 @@
     </button>
   </div>
 
-  <!-- MOBILE FAB -->
   <button class="mob-fab" id="mobFab" title="Upload photos">+</button>
 
-  <!-- MOBILE BOTTOM NAV -->
   <nav class="mob-bottom-nav">
     <a href="library.html" class="mob-nav-item active">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/></svg>
