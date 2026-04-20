@@ -21,9 +21,9 @@ body {margin: 0;
 }
 .Gallery> div{
     position: absolute;
-    bottom: 0;
-    left: 25%;
-    right: 0;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
     color: white;
     font-family: Arial, sans-serif;
@@ -66,22 +66,23 @@ body {margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
+    justify-content: flex-start;
+    min-height: 100vh;
     width: 50vw;
     background-color: white;
+    padding-top: 40px;
     /* padding: 20px; */
     h3{
         font-size: 50px;
         font-weight: bold;
-        margin-top: -250px;
-        margin-left: -250px;
+        margin: 0;
+        margin-bottom: 10px;
     }
     h5{
         /* font-size: 20px; */
         font-weight: lighter;
-        margin-top: -40px;
-        margin-left: -290px;
+        margin: 0;
+        margin-bottom: 30px;
     }
 }
 .login-buttons{
@@ -117,10 +118,239 @@ body {margin: 0;
     font-weight: 5px; 
 }
 form{
-    /* display: flex; */
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    /* justify-content: center; */
     margin-top: 20px;
     gap: 10px;
+}
+#lg_details{
+   /* margin-left: -330px; */
+   /* margin-bottom: 6px; */
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 13px;
+   display: flex;
+   gap: 20px;
+   letter-spacing: 0.07em;
+   justify-content: space-between;
+   align-items: center;
+   flex-direction: column;
+}
+.straight{
+    display: flex;
+    /* margin-left: 20px; */
+    justify-content: space-between;
+}
+.straight a{
+     color: #4f46e5;
+      font-size: 12px;
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+}
+.input-wrap { position: relative; }
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 300px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 0.5px solid #ddd;
+      font-size: 14px;
+      color: #222;
+      background: #fafaf9;
+      outline: none;
+      font-family: inherit;
+    }
+    input[type="password"] {
+      padding-right: 40px;
+    }
+    input:focus { border-color: #4f46e5; background: #fff; }
+    .input-wrap svg {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    .sign-in-btn{
+    width: 100%;
+     padding: 13px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      font-family: inherit;
+    }
+    .sign-in-btn:hover{
+    background: #6056d2;
+    transition: background 0.3s ease-in-out;
+    }
+    span a{
+    color: #4f46e5;
+    text-decoration: none;
+    }
+
+/* Responsive Design */
+/* Tablet & Mobile Screens (768px and below) */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    
+    .Gallery {
+        width: 100%;
+        height: 50vh;
+        background-size: 50% 40%;
+    }
+    
+    .Gallery > div {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        right: auto;
+    }
+    
+    .Details {
+        width: 100%;
+        min-height: auto;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .Details h3 {
+        font-size: 36px;
+        text-align: center;
+    }
+    
+    .Details h5 {
+        font-size: 14px;
+        text-align: center;
+    }
+    
+    .login-buttons {
+        margin-left: 0;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    #google-login, #apple-login {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    #lg_details {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    .straight {
+        width: 100%;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .sign-in-btn {
+        max-width: 350px;
+    }
+}
+
+/* Small Mobile Screens (480px and below) */
+@media (max-width: 480px) {
+    .Gallery {
+        height: 40vh;
+    }
+    
+    .Gallery > div {
+        width: 95%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px;
+    }
+    
+    .Gallery > div > span {
+        font-size: 11px;
+    }
+    
+    .Details {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .Details h3 {
+        font-size: 28px;
+        margin-bottom: 5px;
+    }
+    
+    .Details h5 {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .login-buttons {
+        gap: 8px;
+    }
+    
+    #google-login, #apple-login {
+        width: 100%;
+        max-width: 160px;
+        height: 35px;
+        font-size: 13px;
+    }
+    
+    .Details > span {
+        font-size: 11px;
+    }
+    
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .straight {
+        gap: 3px;
+    }
+    
+    .straight label,
+    .straight a {
+        font-size: 11px;
+    }
+    
+    .sign-in-btn {
+        max-width: 100%;
+        padding: 11px;
+        font-size: 14px;
+    }
+}
+
+/* Large Desktop Screens (1200px and above) */
+@media (min-width: 1200px) {
+    .Details h3 {
+        font-size: 60px;
+    }
+    
+    .Details h5 {
+        font-size: 18px;
+    }
 }

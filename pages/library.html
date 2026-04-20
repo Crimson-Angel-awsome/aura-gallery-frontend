@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura Gallery — Library</title>
-  <link rel="stylesheet" href="/styles/library.css" />
+  <link rel="stylesheet" href="./shared.css" />
+  <link rel="stylesheet" href="./library.css" />
 </head>
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">&#10005;</button>
 
     <div class="brand">
       <div class="brand-icon">
@@ -42,15 +45,13 @@
       </a>
       <a href="#" class="nav-link" data-page="search">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="11" cy="11" r="7"/>
-          <path d="m21 21-4.35-4.35"/>
+          <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
         </svg>
         Search
       </a>
       <a href="./profile.html" class="nav-link" data-page="profile">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
         Profile
       </a>
@@ -70,32 +71,23 @@
       </div>
       <div class="storage-text" id="sidebarStorageText">0 / 10 photos</div>
     </div>
-
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
 
-    <!-- TOPBAR -->
     <header class="topbar">
-
-      <!-- Desktop left -->
-      <div class="topbar-page">Library</div>
-
-      <!-- Mobile left -->
-      <div class="topbar-left-mobile">
-        <button class="mob-menu" title="Menu" aria-label="Open menu">
-          <svg width="20" hmenu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="6"  x2="21" y2="6"/>
+      <div class="topbar-left">
+        <button class="mob-hamburger" id="hamburger" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
             <line x1="3" y1="12" x2="21" y2="12"/>
             <line x1="3" y1="18" x2="21" y2="18"/>
           </svg>
         </button>
-        <span class="topbar-page" style="display:none">The Gallery</span>
+        <span class="topbar-page">Library</span>
       </div>
 
       <div class="topbar-right">
-        <!-- Desktop only -->
         <button class="icon-btn notif-btn" title="Notifications">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
@@ -117,20 +109,10 @@
           </svg>
           + Upload
         </button>
-        <div class="avatar">AG</div>
-
-        <!-- Mobile only -->
-        <button class="mob-edit-btn">Edit</button>
-        <button class="mob-camera-btn" id="mobCameraBtn" title="Upload photo" aria-label="Upload photo">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-            <circle cx="12" cy="13" r="4"/>
-          </svg>
-        </button>
+        <div class="avatar"><a href="./profile.html">AG</a></div>
       </div>
     </header>
 
-    <!-- CONTENT -->
     <main class="content">
 
       <div class="page-header">
@@ -138,14 +120,11 @@
         <p class="page-desc">All your photos — organized by when you uploaded them.</p>
       </div>
 
-      <!-- Mobile storage card -->
       <div class="mob-storage-card" id="mobStorageCard">
         <div class="mob-storage-top">
           <div>
             <div class="mob-storage-label">Storage Status</div>
-            <div class="mob-storage-count" id="mobStorageCount">
-              0<span>/ 10 photos used</span>
-            </div>
+            <div class="mob-storage-count" id="mobStorageCount">0<span>/ 10 photos used</span></div>
           </div>
           <div class="mob-storage-pct" id="mobStoragePct">0%</div>
         </div>
@@ -162,10 +141,8 @@
         <button class="btn-outline" id="upgradeBtn">Upgrade Plan</button>
       </div>
 
-      <!-- Date-grouped photo feed -->
       <div id="photoFeed"></div>
 
-      <!-- Empty state -->
       <div class="empty-state" id="emptyState">
         <div class="empty-icon">
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
@@ -175,112 +152,103 @@
           </svg>
         </div>
         <p class="empty-title">No photos yet</p>
-        <p class="empty-sub">Click <strong>+ Upload</strong> in the top right to add your first photo.</p>
+        <p class="empty-sub">Click <strong>+ Upload</strong> to add your first photo.</p>
       </div>
 
-      <!-- Storage widget -->
       <div class="storage-widget" id="storageWidget">
         <div class="sw-card">
           <div class="sw-label">Storage Breakdown</div>
           <div class="sw-pct" id="swPct">0<sup>%</sup></div>
-          <div class="sw-track">
-            <div class="sw-fill" id="swFill"></div>
-          </div>
+          <div class="sw-track"><div class="sw-fill" id="swFill"></div></div>
           <div class="sw-caption" id="swCaption">0 of 10 photos used.</div>
         </div>
         <div class="sw-smart">
           <div class="sw-smart-star">&#10022;</div>
           <div class="sw-smart-title">Smart Curation</div>
-          <div class="sw-smart-desc">
-            Let our AI organize your photos into themed collections automatically.
-          </div>
+          <div class="sw-smart-desc">Let our AI organize your photos into themed collections automatically.</div>
         </div>
       </div>
 
     </main>
   </div>
 
-  <!-- HIDDEN FILE INPUT -->
   <input type="file" id="fileInput" accept="image/*" multiple />
 
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lb-close" id="lbClose">&#10005;</button>
     <img class="lb-img" id="lbImg" src="" alt="" />
     <div class="lb-meta" id="lbMeta"></div>
   </div>
 
-  <!-- UPGRADE MODAL -->
   <div class="modal-backdrop" id="modalBackdrop">
-    <div class="modal" id="modal">
+    <div class="modal">
       <button class="modal-close" id="modalClose">&#10005;</button>
       <h2 class="modal-title">Choose Your Plan</h2>
       <p class="modal-sub">Upgrade to store more memories in the Aura cloud.</p>
       <div class="plan-grid">
         <div class="plan-card" data-plan="basic">
-          <div class="pc-name">Basic</div>
-          <div class="pc-limit">10 photos</div>
-          <div class="pc-price">Free</div>
+          <div class="pc-name">Basic</div><div class="pc-limit">10 photos</div><div class="pc-price">Free</div>
         </div>
         <div class="plan-card featured" data-plan="premium">
           <div class="pc-badge">Popular</div>
-          <div class="pc-name">Premium</div>
-          <div class="pc-limit">50 photos</div>
-          <div class="pc-price">&#8358;2,500/mo</div>
+          <div class="pc-name">Premium</div><div class="pc-limit">50 photos</div><div class="pc-price">&#8358;2,500/mo</div>
         </div>
         <div class="plan-card" data-plan="diamond">
-          <div class="pc-name">Diamond</div>
-          <div class="pc-limit">100 photos</div>
-          <div class="pc-price">&#8358;5,000/mo</div>
+          <div class="pc-name">Diamond</div><div class="pc-limit">100 photos</div><div class="pc-price">&#8358;5,000/mo</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MOBILE FAB -->
-  <button class="mob-fab" id="mobFab" title="Upload photos" aria-label="Upload photos">+</button>
-
-  <!-- MOBILE BOTTOM NAVIGATION -->
-  <nav class="mob-bottom-nav" aria-label="Main navigation">
-
-    <a href="#" class="mob-nav-item active" data-page="library">
-      <svg viewBox="0 0 24 24" class="fill-active">
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+  <div class="ctx-menu" id="photoCtxMenu">
+    <button class="ctx-item ctx-share" id="ctxShare">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
       </svg>
+      Share Link
+    </button>
+    <button class="ctx-item ctx-delete" id="ctxDelete">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+        <path d="M10 11v6"/><path d="M14 11v6"/>
+        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+      </svg>
+      Delete
+    </button>
+  </div>
+
+  <button class="mob-fab" id="mobFab" title="Upload photos">+</button>
+
+  <nav class="mob-bottom-nav">
+    <a href="library.html" class="mob-nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/></svg>
       <span class="mob-nav-label">Home</span>
     </a>
-
-    <a href="#" class="mob-nav-item" data-page="layout">
-      <svg viewBox="0 0 24 24">
-        <rect x="3" y="3" width="7" height="7" rx="1"/>
-        <rect x="14" y="3" width="7" height="7" rx="1"/>
-        <rect x="3" y="14" width="7" height="7" rx="1"/>
-        <rect x="14" y="14" width="7" height="7" rx="1"/>
+    <a href="collections.html" class="mob-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
       </svg>
-      <span class="mob-nav-label">Layout</span>
+      <span class="mob-nav-label">Collections</span>
     </a>
-
-    <a href="#" class="mob-nav-item" data-page="search">
-      <svg viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="7"/>
-        <path d="m21 21-4.35-4.35"/>
+    <a href="#" class="mob-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
       </svg>
       <span class="mob-nav-label">Search</span>
     </a>
-
-    <a href="#" class="mob-nav-item" data-page="profile">
-      <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    <a href="#" class="mob-nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
       </svg>
       <span class="mob-nav-label">Profile</span>
     </a>
-
   </nav>
 
-  <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
-  <script src="/scripts/library.js"></script>
+  <script src="./library.js"></script>
 </body>
 </html>
