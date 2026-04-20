@@ -147,7 +147,6 @@
 
 @media (max-width: 700px) {
 
-  /* Toolbar stacks vertically */
   .col-toolbar { flex-direction: column; align-items: flex-start; padding: 0 1rem; }
   .col-toolbar-left { flex-direction: column; align-items: flex-start; width: 100%; gap: 0.6rem; }
 
@@ -163,7 +162,6 @@
     gap: 0; padding: 0;
   }
 
-  /* Mobile card: horizontal layout (mosaic left + info right) */
   .col-card {
     border-radius: 0; border: none;
     border-bottom: 1px solid var(--border);
@@ -182,7 +180,6 @@
     flex-shrink: 0; margin-left: 0.5rem;
   }
 
-  /* New collection card at bottom of list */
   .col-card-new {
     border-radius: 0; border: none;
     border-top: 2px dashed var(--border);
