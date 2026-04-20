@@ -12,7 +12,7 @@ if (toggleIcon && passwordInput) {
 }
 
 if (form) {
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const email = emailInput.value.trim();
@@ -37,8 +37,40 @@ if (form) {
       return;
     }
 
-    alert('Login submitted successfully!');
+    // Make API call to login
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Login successful!');
+        localStorage.setItem('token', data.token); // Store JWT token
+        // Optionally redirect to gallery page
+        // window.location.href = 'gallery.html';
+      } else {
+        alert(data.message || 'Login failed');
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again.');
+      console.error('Login error:', error);
+    }
+
     form.reset();
     passwordInput.type = 'password';
   });
 }
+
+document.getElementById('google-login').addEventListener('click', () => {
+  window.location.href = 'https://accounts.google.com';
+});
+
+document.getElementById('apple-login').addEventListener('click', () => {
+  window.location.href = 'https://appleid.apple.com/signin';
+});
