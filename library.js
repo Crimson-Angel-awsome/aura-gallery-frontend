@@ -1,38 +1,22 @@
-/* Aura Gallery — library.js
-   Pure vanilla JS, zero dependencies */
-
 'use strict';
 
-/* ─────────────────────────────────────────
-   ENDPOINT CONFIG
-   Replace these URLs with your real backend
-───────────────────────────────────────── */
 const API = {
-  upload:   '',   /* POST — upload image to cloud. e.g. 'https://api.auragallery.com/photos'        */
-  delete:   '',   /* DELETE — delete photo by id. e.g. 'https://api.auragallery.com/photos/:id'    */
-  share:    ''    /* POST — generate shareable URL. e.g. 'https://api.auragallery.com/photos/:id/share' */
+  upload:   'https://127.0.0:8081/photos/upload',
+  delete:   'https://127.0.0:8081/photos/{photos_id}',
+  share:    'https://127.0.0:8081/share/{collection_id}'
 };
 
-/* ─────────────────────────────────────────
-   PLAN CONFIG
-───────────────────────────────────────── */
 const PLANS = {
   basic:   { label: 'Basic Plan',   limit: 10  },
   premium: { label: 'Premium Plan', limit: 50  },
   diamond: { label: 'Diamond Plan', limit: 100 }
 };
 
-/* ─────────────────────────────────────────
-   STATE
-───────────────────────────────────────── */
 let currentPlan    = 'basic';
-let photos         = [];       /* [{ id, name, src, uploadedAt, cloudId? }] */
+let photos         = [];
 let toastTimer     = null;
-let activeMenuId   = null;     /* id of photo whose context menu is open    */
+let activeMenuId   = null;
 
-/* ─────────────────────────────────────────
-   DOM REFS
-───────────────────────────────────────── */
 const uploadBtn       = document.getElementById('uploadBtn');
 const fileInput       = document.getElementById('fileInput');
 const photoFeed       = document.getElementById('photoFeed');
@@ -56,35 +40,27 @@ const photoCtxMenu    = document.getElementById('photoCtxMenu');
 const ctxShare        = document.getElementById('ctxShare');
 const ctxDelete       = document.getElementById('ctxDelete');
 
-/* Mobile */
 const mobFab          = document.getElementById('mobFab');
 const mobStorageCount = document.getElementById('mobStorageCount');
 const mobStoragePct   = document.getElementById('mobStoragePct');
 const mobBarFill      = document.getElementById('mobBarFill');
 
-/* Sidebar */
 const sidebar         = document.getElementById('sidebar');
 const sidebarOverlay  = document.getElementById('sidebarOverlay');
 const hamburger       = document.getElementById('hamburger');
 const sidebarClose    = document.getElementById('sidebarClose');
 
-/* ─────────────────────────────────────────
-   INIT
-───────────────────────────────────────── */
 function init() {
   loadState();
   bindEvents();
   render();
 }
 
-/* ─────────────────────────────────────────
-   PERSIST
-───────────────────────────────────────── */
 function saveState() {
   try {
     localStorage.setItem('ag_plan',   currentPlan);
     localStorage.setItem('ag_photos', JSON.stringify(photos));
-  } catch (e) { /* quota exceeded */ }
+  } catch (e) { }
 }
 
 function loadState() {
@@ -98,11 +74,7 @@ function loadState() {
   } catch (e) { photos = []; }
 }
 
-/* ─────────────────────────────────────────
-   BIND EVENTS
-───────────────────────────────────────── */
 function bindEvents() {
-  /* Upload */
   uploadBtn.addEventListener('click', function() { fileInput.click(); });
   if (mobFab) mobFab.addEventListener('click', function() { fileInput.click(); });
   fileInput.addEventListener('change', function(e) {
@@ -110,28 +82,24 @@ function bindEvents() {
     e.target.value = '';
   });
 
-  /* Sidebar toggle (hamburger) */
   hamburger.addEventListener('click', openSidebar);
   sidebarClose.addEventListener('click', closeSidebar);
   sidebarOverlay.addEventListener('click', closeSidebar);
 
-  /* Upgrade modal */
   upgradeBtn.addEventListener('click', openPlanModal);
   modalClose.addEventListener('click', closePlanModal);
   modalBackdrop.addEventListener('click', function(e) {
     if (e.target === modalBackdrop) closePlanModal();
   });
 
-  /* Plan cards */
   planCards.forEach(function(card) {
     card.addEventListener('click', function() { selectPlan(card.getAttribute('data-plan')); });
   });
 
-  /* Lightbox */
   lbClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
 
-  /* Context menu actions */
+
   ctxShare.addEventListener('click', function() {
     if (activeMenuId) sharePhoto(activeMenuId);
     closeCtxMenu();
@@ -141,22 +109,17 @@ function bindEvents() {
     closeCtxMenu();
   });
 
-  /* Close context menu when clicking elsewhere */
   document.addEventListener('click', function(e) {
     if (photoCtxMenu.classList.contains('open') && !photoCtxMenu.contains(e.target)) {
       closeCtxMenu();
     }
   });
 
-  /* Keyboard */
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') { closeLightbox(); closePlanModal(); closeCtxMenu(); closeSidebar(); }
   });
 }
 
-/* ─────────────────────────────────────────
-   SIDEBAR
-───────────────────────────────────────── */
 function openSidebar() {
   sidebar.classList.add('open');
   sidebarOverlay.classList.add('open');
@@ -168,9 +131,6 @@ function closeSidebar() {
   document.body.style.overflow = '';
 }
 
-/* ─────────────────────────────────────────
-   UPLOAD — read locally, then push to cloud
-───────────────────────────────────────── */
 function handleUpload(files) {
   if (!files || files.length === 0) return;
   const limit   = PLANS[currentPlan].limit;
@@ -199,25 +159,6 @@ function handleUpload(files) {
       added++;
       loaded++;
 
-      /* ── CLOUD UPLOAD ──────────────────────────────────────
-         When API.upload is set, POST the image to your backend.
-         Your server should return { id: '<cloudId>' }.
-
-         Swap the if-block below with a real fetch call:
-
-         if (API.upload) {
-           var formData = new FormData();
-           formData.append('file', file);
-           fetch(API.upload, { method: 'POST', body: formData })
-             .then(function(r) { return r.json(); })
-             .then(function(data) {
-               photo.cloudId = data.id;
-               saveState();
-             })
-             .catch(function() { showToast('Cloud sync failed for ' + file.name, 'error'); });
-         }
-      ─────────────────────────────────────────────────────── */
-
       checkDone();
     };
     reader.onerror = function() { loaded++; checkDone(); };
@@ -232,51 +173,18 @@ function handleUpload(files) {
   }
 }
 
-/* ─────────────────────────────────────────
-   DELETE PHOTO
-───────────────────────────────────────── */
 function deletePhoto(id) {
   const photo = findPhoto(id);
-
-  /* ── CLOUD DELETE ─────────────────────────────────────────
-     If API.delete is set and the photo has a cloudId, call:
-     DELETE <API.delete>/<photo.cloudId>
-
-     if (API.delete && photo && photo.cloudId) {
-       fetch(API.delete + '/' + photo.cloudId, { method: 'DELETE' })
-         .catch(function() { showToast('Could not delete from cloud.', 'error'); });
-     }
-  ─────────────────────────────────────────────────────────── */
 
   photos = photos.filter(function(p) { return p.id !== id; });
   saveState(); render();
   showToast('Photo removed.', '');
 }
 
-/* ─────────────────────────────────────────
-   SHARE PHOTO
-───────────────────────────────────────── */
 function sharePhoto(id) {
   const photo = findPhoto(id);
   if (!photo) return;
 
-  /* ── CLOUD SHARE ──────────────────────────────────────────
-     When API.share is set, POST to your backend to generate
-     a shareable URL for this photo.
-
-     if (API.share && photo.cloudId) {
-       fetch(API.share.replace(':id', photo.cloudId), { method: 'POST' })
-         .then(function(r) { return r.json(); })
-         .then(function(data) {
-           copyToClipboard(data.url);
-           showToast('Share link copied!', 'success');
-         })
-         .catch(function() { showToast('Could not generate share link.', 'error'); });
-       return;
-     }
-  ─────────────────────────────────────────────────────────── */
-
-  /* Fallback: copy the local data URL or page URL */
   const fallbackUrl = window.location.href + '#photo-' + photo.id;
   copyToClipboard(fallbackUrl);
   showToast('Share link copied to clipboard!', 'success');
@@ -293,15 +201,11 @@ function copyToClipboard(text) {
   }
 }
 
-/* ─────────────────────────────────────────
-   CONTEXT MENU
-───────────────────────────────────────── */
 function openCtxMenu(id, x, y) {
   activeMenuId = id;
   photoCtxMenu.style.left = x + 'px';
   photoCtxMenu.style.top  = y + 'px';
 
-  /* Keep menu within viewport */
   photoCtxMenu.classList.add('open');
   const rect = photoCtxMenu.getBoundingClientRect();
   if (rect.right > window.innerWidth)  photoCtxMenu.style.left = (x - rect.width) + 'px';
@@ -313,9 +217,6 @@ function closeCtxMenu() {
   activeMenuId = null;
 }
 
-/* ─────────────────────────────────────────
-   PLAN MODAL
-───────────────────────────────────────── */
 function openPlanModal() {
   planCards.forEach(function(card) {
     card.classList.toggle('current', card.getAttribute('data-plan') === currentPlan);
@@ -338,9 +239,6 @@ function selectPlan(plan) {
   saveState(); render(); closePlanModal();
 }
 
-/* ─────────────────────────────────────────
-   LIGHTBOX
-───────────────────────────────────────── */
 function openLightbox(id) {
   const photo = findPhoto(id);
   if (!photo) return;
@@ -354,9 +252,6 @@ function closeLightbox() {
   lbImg.src = ''; document.body.style.overflow = '';
 }
 
-/* ─────────────────────────────────────────
-   DATE GROUPING
-───────────────────────────────────────── */
 function getDateLabel(date) {
   const now   = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -383,9 +278,6 @@ function formatTime(date) {
   return new Date(date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 }
 
-/* ─────────────────────────────────────────
-   RENDER
-───────────────────────────────────────── */
 function render() {
   renderPlanPill();
   renderStorageBars();
@@ -444,14 +336,12 @@ function renderFeed() {
     html += '</div></div>';
   });
 
-  /* Remove old listener before re-adding */
   photoFeed.removeEventListener('click', feedClickHandler);
   photoFeed.innerHTML = html;
   photoFeed.addEventListener('click', feedClickHandler);
 }
 
 function feedClickHandler(e) {
-  /* Three-dot menu button */
   const menuBtn = e.target.closest('[data-menu]');
   if (menuBtn) {
     e.stopPropagation();
@@ -460,16 +350,12 @@ function feedClickHandler(e) {
     openCtxMenu(id, rect.left, rect.bottom + 4);
     return;
   }
-  /* Photo click → lightbox (not when menu is open) */
   if (!photoCtxMenu.classList.contains('open')) {
     const item = e.target.closest('.photo-item');
     if (item) openLightbox(item.getAttribute('data-id'));
   }
 }
 
-/* ─────────────────────────────────────────
-   UTILS
-───────────────────────────────────────── */
 function findPhoto(id) {
   for (let i = 0; i < photos.length; i++) { if (photos[i].id === id) return photos[i]; }
   return null;
@@ -488,7 +374,4 @@ function showToast(msg, type) {
   toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3000);
 }
 
-/* ─────────────────────────────────────────
-   BOOT
-───────────────────────────────────────── */
 init();

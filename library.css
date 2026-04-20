@@ -1,8 +1,3 @@
-/* Aura Gallery — library.css
-   Library-page-specific styles only.
-   Requires shared.css to be loaded first. */
-
-/* PHOTO FEED */
 #photoFeed { display: flex; flex-direction: column; gap: 2.25rem; }
 
 .date-group {}
@@ -18,7 +13,6 @@
   text-transform: none; letter-spacing: 0;
 }
 
-/* Photo grid */
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
@@ -37,7 +31,6 @@
 }
 .photo-item:hover img { transform: scale(1.06); }
 
-/* Bottom gradient overlay */
 .photo-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to bottom, transparent 50%, rgba(10,8,5,0.55));
@@ -47,7 +40,6 @@
 .photo-item:hover .photo-overlay { opacity: 1; }
 .photo-time { font-size: 0.62rem; color: rgba(255,255,255,0.85); font-weight: 500; }
 
-/* Three-dot menu button on each photo */
 .photo-menu-btn {
   position: absolute; top: 6px; right: 6px;
   width: 28px; height: 28px;
@@ -61,7 +53,6 @@
 .photo-item:hover .photo-menu-btn { opacity: 1; }
 .photo-menu-btn:hover { background: rgba(0,0,0,0.7); }
 
-/* MOBILE PHOTO GRID */
 @media (max-width: 700px) {
   #photoFeed { gap: 2rem; padding-top: 1rem; }
 
@@ -81,12 +72,10 @@
     gap: 6px; padding: 0 1rem;
   }
 
-  /* First photo in each group = full-width hero */
   .photo-grid .photo-item:first-child {
     grid-column: 1 / -1; aspect-ratio: 16 / 9;
   }
 
-  /* Always show overlay and menu on mobile */
   .photo-overlay { opacity: 1; background: linear-gradient(to bottom, transparent 60%, rgba(10,8,5,0.38)); }
   .photo-menu-btn { opacity: 0.85; }
 

@@ -4,15 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aura Gallery — Collections</title>
-  <link rel="stylesheet" href="/styles/shared.css" />
-  <link rel="stylesheet" href="/styles/collections.css" />
+  <link rel="stylesheet" href="./shared.css" />
+  <link rel="stylesheet" href="./collections.css" />
 </head>
 <body>
 
-  <!-- MOBILE SIDEBAR OVERLAY -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">&#10005;</button>
 
@@ -73,7 +71,6 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
 
     <header class="topbar">
@@ -107,7 +104,7 @@
           </svg>
           Create New Collection
         </button>
-        <div class="avatar">AG</div>
+        <div class="avatar"><a href="./profile.html">AG</a></div>
       </div>
     </header>
 
@@ -118,7 +115,6 @@
         <p class="page-desc">Organize your visual narrative. From seasonal snapshots to professional portfolios, manage your memories in bespoke collections.</p>
       </div>
 
-      <!-- Mobile storage card -->
       <div class="mob-storage-card" id="mobStorageCard">
         <div class="mob-storage-top">
           <div>
@@ -130,7 +126,6 @@
         <div class="mob-bar-track"><div class="mob-bar-fill" id="mobBarFill"></div></div>
       </div>
 
-      <!-- Toolbar: filter tabs + sort -->
       <div class="col-toolbar">
         <div class="col-toolbar-left">
           <button class="create-btn-inline" id="createBtnMob">
@@ -158,10 +153,8 @@
         </div>
       </div>
 
-      <!-- Collection grid -->
       <div class="col-grid" id="colGrid"></div>
 
-      <!-- Empty state -->
       <div class="empty-state" id="emptyState">
         <div class="empty-icon">
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
@@ -173,7 +166,6 @@
         <p class="empty-sub">Click <strong>Create New Collection</strong> to get started.</p>
       </div>
 
-      <!-- Storage widget -->
       <div class="storage-widget" id="storageWidget">
         <div class="sw-card">
           <div class="sw-label">Storage Breakdown</div>
@@ -191,7 +183,6 @@
     </main>
   </div>
 
-  <!-- COLLECTION CONTEXT MENU -->
   <div class="ctx-menu" id="colCtxMenu">
     <button class="ctx-item" id="ctxRename">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -219,7 +210,6 @@
     </button>
   </div>
 
-  <!-- CREATE / RENAME MODAL -->
   <div class="modal-backdrop" id="createModal">
     <div class="modal">
       <button class="modal-close" id="createModalClose">&#10005;</button>
@@ -252,7 +242,6 @@
     </div>
   </div>
 
-  <!-- UPGRADE MODAL -->
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
       <button class="modal-close" id="modalClose">&#10005;</button>
@@ -273,10 +262,8 @@
     </div>
   </div>
 
-  <!-- MOBILE FAB -->
   <button class="mob-fab" id="mobFab" title="New collection">+</button>
 
-  <!-- MOBILE BOTTOM NAV -->
   <nav class="mob-bottom-nav">
     <a href="library.html" class="mob-nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -308,6 +295,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="/scripts/collections.js"></script>
+  <script src="./collections.js"></script>
 </body>
 </html>

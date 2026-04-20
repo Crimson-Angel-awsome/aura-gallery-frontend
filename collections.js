@@ -1,47 +1,26 @@
-/* Aura Gallery — collections.js
-   Pure vanilla JS, zero dependencies */
-
 'use strict';
 
-/* ─────────────────────────────────────────
-   ENDPOINT CONFIG
-───────────────────────────────────────── */
 const API = {
-  shareCollection: ''   /* POST — generate shareable URL for a collection.
-                           e.g. 'https://api.auragallery.com/collections/:id/share'
-                           Expected response: { url: 'https://...' }            */
+  shareCollection: ''
 };
 
-/* ─────────────────────────────────────────
-   PLAN CONFIG (mirrors library)
-───────────────────────────────────────── */
 const PLANS = {
   basic:   { label: 'Basic Plan',   limit: 10  },
   premium: { label: 'Premium Plan', limit: 50  },
   diamond: { label: 'Diamond Plan', limit: 100 }
 };
 
-/* ─────────────────────────────────────────
-   STATE
-   collection = {
-     id, name, visibility ('private'|'shared'),
-     photoIds[], createdAt, modifiedAt
-   }
-───────────────────────────────────────── */
 let currentPlan  = 'basic';
-let photos       = [];          /* from library localStorage */
+let photos       = [];
 let collections  = [];
 let currentFilter = 'all';
 let currentSort   = 'modified';
-let activeColId   = null;       /* id of collection whose context menu is open */
-let editingColId  = null;       /* null = creating, string = renaming */
-let selectedPhotoIds = [];      /* photo ids selected in the picker */
+let activeColId   = null;
+let editingColId  = null;
+let selectedPhotoIds = [];
 let currentVisibility = 'private';
 let toastTimer = null;
 
-/* ─────────────────────────────────────────
-   DOM REFS
-───────────────────────────────────────── */
 const colGrid        = document.getElementById('colGrid');
 const emptyState     = document.getElementById('emptyState');
 const sortSelect     = document.getElementById('sortSelect');
@@ -73,7 +52,6 @@ const sidebarOverlay= document.getElementById('sidebarOverlay');
 const hamburger     = document.getElementById('hamburger');
 const sidebarClose  = document.getElementById('sidebarClose');
 const toast         = document.getElementById('toast');
-
 const sidebarFill   = document.getElementById('sidebarStorageFill');
 const sidebarText   = document.getElementById('sidebarStorageText');
 const swPct         = document.getElementById('swPct');
@@ -83,26 +61,19 @@ const mobStorageCount = document.getElementById('mobStorageCount');
 const mobStoragePct   = document.getElementById('mobStoragePct');
 const mobBarFill      = document.getElementById('mobBarFill');
 
-/* ─────────────────────────────────────────
-   INIT
-───────────────────────────────────────── */
 function init() {
   loadState();
   bindEvents();
   render();
 }
 
-/* ─────────────────────────────────────────
-   PERSIST
-───────────────────────────────────────── */
 function saveState() {
   try {
     localStorage.setItem('ag_collections', JSON.stringify(collections));
-  } catch (e) { /* quota exceeded */ }
+  } catch (e) { }
 }
 
 function loadState() {
-  /* Load plan + photos from library storage */
   const savedPlan = localStorage.getItem('ag_plan');
   if (savedPlan && PLANS[savedPlan]) currentPlan = savedPlan;
 
@@ -113,7 +84,6 @@ function loadState() {
     });
   } catch (e) { photos = []; }
 
-  /* Load collections */
   try {
     const rawCols = JSON.parse(localStorage.getItem('ag_collections') || '[]');
     collections = rawCols.map(function(c) {
@@ -129,26 +99,19 @@ function loadState() {
   } catch (e) { collections = []; }
 }
 
-/* ─────────────────────────────────────────
-   BIND EVENTS
-───────────────────────────────────────── */
 function bindEvents() {
-  /* Sidebar */
   hamburger.addEventListener('click',     openSidebar);
   sidebarClose.addEventListener('click',  closeSidebar);
   sidebarOverlay.addEventListener('click',closeSidebar);
 
-  /* Create collection */
   createBtn.addEventListener('click',    function() { openCreateModal(); });
   createBtnMob.addEventListener('click', function() { openCreateModal(); });
   mobFab.addEventListener('click',       function() { openCreateModal(); });
 
-  /* Create modal controls */
   createModalClose.addEventListener('click', closeCreateModal);
   createModal.addEventListener('click', function(e) { if (e.target === createModal) closeCreateModal(); });
   saveColBtn.addEventListener('click', saveCollection);
 
-  /* Visibility toggle */
   visBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
       visBtns.forEach(function(b) { b.classList.remove('active'); });
@@ -157,13 +120,11 @@ function bindEvents() {
     });
   });
 
-  /* Sort */
   sortSelect.addEventListener('change', function() {
     currentSort = sortSelect.value;
     renderGrid();
   });
 
-  /* Filter tabs */
   filterTabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
       filterTabs.forEach(function(t) { t.classList.remove('active'); });
@@ -173,7 +134,6 @@ function bindEvents() {
     });
   });
 
-  /* Collection context menu actions */
   ctxRename.addEventListener('click', function() {
     if (activeColId) openRenameModal(activeColId);
     closeCtxMenu();
@@ -187,28 +147,22 @@ function bindEvents() {
     closeCtxMenu();
   });
 
-  /* Close ctx menu on outside click */
   document.addEventListener('click', function(e) {
     if (colCtxMenu.classList.contains('open') && !colCtxMenu.contains(e.target)) closeCtxMenu();
   });
 
-  /* Upgrade modal */
   modalClose.addEventListener('click', closePlanModal);
   modalBackdrop.addEventListener('click', function(e) { if (e.target === modalBackdrop) closePlanModal(); });
   planCards.forEach(function(card) {
     card.addEventListener('click', function() { selectPlan(card.getAttribute('data-plan')); });
   });
 
-  /* Keyboard */
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') { closeCreateModal(); closePlanModal(); closeCtxMenu(); closeSidebar(); }
     if (e.key === 'Enter' && createModal.classList.contains('open')) saveCollection();
   });
 }
 
-/* ─────────────────────────────────────────
-   SIDEBAR
-───────────────────────────────────────── */
 function openSidebar() {
   sidebar.classList.add('open');
   sidebarOverlay.classList.add('open');
@@ -220,9 +174,6 @@ function closeSidebar() {
   document.body.style.overflow = '';
 }
 
-/* ─────────────────────────────────────────
-   CREATE / RENAME MODAL
-───────────────────────────────────────── */
 function openCreateModal() {
   editingColId   = null;
   selectedPhotoIds = [];
@@ -274,7 +225,6 @@ function saveCollection() {
   const now = new Date();
 
   if (editingColId) {
-    /* Update existing */
     const col = findCollection(editingColId);
     if (col) {
       col.name       = name;
@@ -284,7 +234,6 @@ function saveCollection() {
     }
     showToast('Collection updated.', 'success');
   } else {
-    /* Create new */
     collections.push({
       id:         'col_' + Date.now(),
       name:       name,
@@ -301,9 +250,6 @@ function saveCollection() {
   renderGrid();
 }
 
-/* ─────────────────────────────────────────
-   PHOTO PICKER (inside create/edit modal)
-───────────────────────────────────────── */
 function renderPhotoPicker() {
   if (photos.length === 0) {
     photoPicker.innerHTML = '<p class="picker-empty">No photos in your library yet. <a href="library.html">Upload some first.</a></p>';
@@ -327,14 +273,10 @@ function renderPhotoPicker() {
     if (idx === -1) selectedPhotoIds.push(pid);
     else            selectedPhotoIds.splice(idx, 1);
     thumb.classList.toggle('selected', idx === -1);
-    /* Update checkmark */
     renderPhotoPicker();
   });
 }
 
-/* ─────────────────────────────────────────
-   DELETE COLLECTION
-───────────────────────────────────────── */
 function deleteCollection(id) {
   collections = collections.filter(function(c) { return c.id !== id; });
   saveState();
@@ -342,34 +284,15 @@ function deleteCollection(id) {
   showToast('Collection deleted.', '');
 }
 
-/* ─────────────────────────────────────────
-   SHARE COLLECTION
-───────────────────────────────────────── */
 function shareCollection(id) {
   const col = findCollection(id);
   if (!col) return;
-
-  /* ── CLOUD SHARE ──────────────────────────────────────────
-     When API.shareCollection is set, POST to your backend:
-
-     fetch(API.shareCollection.replace(':id', col.id), { method: 'POST' })
-       .then(function(r) { return r.json(); })
-       .then(function(data) {
-         copyToClipboard(data.url);
-         showToast('Share link copied!', 'success');
-       })
-       .catch(function() { showToast('Could not generate share link.', 'error'); });
-     return;
-  ─────────────────────────────────────────────────────────── */
 
   const fallbackUrl = window.location.href.replace('collections.html', '') + 'collection.html?id=' + col.id;
   copyToClipboard(fallbackUrl);
   showToast('Share link copied to clipboard!', 'success');
 }
 
-/* ─────────────────────────────────────────
-   CONTEXT MENU
-───────────────────────────────────────── */
 function openCtxMenu(id, x, y) {
   activeColId = id;
   colCtxMenu.style.left = x + 'px';
@@ -381,9 +304,6 @@ function openCtxMenu(id, x, y) {
 }
 function closeCtxMenu() { colCtxMenu.classList.remove('open'); activeColId = null; }
 
-/* ─────────────────────────────────────────
-   PLAN MODAL
-───────────────────────────────────────── */
 function closePlanModal() { modalBackdrop.classList.remove('open'); }
 function selectPlan(plan) {
   if (!PLANS[plan]) return;
@@ -394,9 +314,6 @@ function selectPlan(plan) {
   showToast('Switched to ' + PLANS[plan].label + '.', 'success');
 }
 
-/* ─────────────────────────────────────────
-   RENDER
-───────────────────────────────────────── */
 function render() {
   renderStorageBars();
   renderGrid();
@@ -420,12 +337,10 @@ function renderStorageBars() {
 function getSortedFiltered() {
   let list = collections.slice();
 
-  /* Filter */
   if (currentFilter !== 'all') {
     list = list.filter(function(c) { return c.visibility === currentFilter; });
   }
 
-  /* Sort */
   list.sort(function(a, b) {
     if (currentSort === 'created')  return new Date(b.createdAt)  - new Date(a.createdAt);
     if (currentSort === 'modified') return new Date(b.modifiedAt) - new Date(a.modifiedAt);
@@ -443,7 +358,6 @@ function formatDateMeta(col) {
   if (currentSort === 'alpha') {
     return col.photoIds.length + ' item' + (col.photoIds.length !== 1 ? 's' : '');
   }
-  /* default: modified */
   return col.photoIds.length + ' item' + (col.photoIds.length !== 1 ? 's' : '') +
          ' \u00b7 Last updated ' + relativeDate(col.modifiedAt);
 }
@@ -470,14 +384,12 @@ function renderGrid() {
 
   let html = '';
   list.forEach(function(col, i) {
-    /* Get up to 4 photos for mosaic */
     const thumbPhotos = col.photoIds.slice(0, 4).map(function(pid) {
       return photos.find(function(p) { return p.id === pid; }) || null;
     }).filter(Boolean);
 
     html += '<div class="col-card" style="animation-delay:' + (i * 0.05) + 's" data-col-id="' + escapeHtml(col.id) + '">';
 
-    /* Mosaic */
     html += '<div class="col-mosaic">';
     for (let m = 0; m < 4; m++) {
       if (thumbPhotos[m]) {
@@ -488,7 +400,6 @@ function renderGrid() {
     }
     html += '</div>';
 
-    /* Body */
     html += '<div class="col-card-body">';
     html += '<div class="col-card-header">';
     html += '<div class="col-card-name">' + escapeHtml(col.name) + '</div>';
@@ -502,7 +413,6 @@ function renderGrid() {
     html += '</div>';
   });
 
-  /* "New Collection" placeholder card */
   html += '<button class="col-card-new" id="newColCard">';
   html += '<div class="col-card-new-icon">+</div>';
   html += '<span class="col-card-new-label">New Collection</span>';
@@ -514,7 +424,6 @@ function renderGrid() {
 }
 
 function gridClickHandler(e) {
-  /* Three-dot menu */
   const menuBtn = e.target.closest('[data-menu-col]');
   if (menuBtn) {
     e.stopPropagation();
@@ -524,22 +433,15 @@ function gridClickHandler(e) {
     return;
   }
 
-  /* New collection placeholder */
   const newCard = e.target.closest('#newColCard');
   if (newCard) { openCreateModal(); return; }
 
-  /* Collection card click (if ctx menu not open) */
   if (!colCtxMenu.classList.contains('open')) {
     const card = e.target.closest('.col-card');
     if (card) {
-      /* Future: navigate into collection view */
-    }
   }
 }
 
-/* ─────────────────────────────────────────
-   UTILS
-───────────────────────────────────────── */
 function findCollection(id) {
   for (let i = 0; i < collections.length; i++) { if (collections[i].id === id) return collections[i]; }
   return null;
@@ -569,7 +471,4 @@ function showToast(msg, type) {
   toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3000);
 }
 
-/* ─────────────────────────────────────────
-   BOOT
-───────────────────────────────────────── */
 init();

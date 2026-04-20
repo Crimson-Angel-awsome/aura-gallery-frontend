@@ -1,8 +1,3 @@
-/* Aura Gallery — collections.css
-   Collections-page-specific styles.
-   Requires shared.css first. */
-
-/* TOOLBAR */
 .col-toolbar {
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.75rem;
@@ -38,14 +33,12 @@
   font-size: 0.75rem; font-family: inherit; cursor: pointer; outline: none;
 }
 
-/* COLLECTION GRID */
 .col-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
-/* ── Collection Card ── */
 .col-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 14px; overflow: hidden;
@@ -54,7 +47,6 @@
 }
 .col-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 
-/* Mosaic thumbnail — 2×2 grid of photos */
 .col-mosaic {
   display: grid; grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr; aspect-ratio: 4 / 3; overflow: hidden;
@@ -70,7 +62,6 @@
   color: var(--text3); font-size: 1.2rem;
 }
 
-/* Card body */
 .col-card-body { padding: 0.95rem 1rem 0.85rem; }
 .col-card-header { display: flex; align-items: flex-start; justify-content: space-between; }
 .col-card-name {
@@ -87,7 +78,6 @@
 .col-card-menu:hover { color: var(--text); background: var(--bg); }
 .col-card-meta { font-size: 0.73rem; color: var(--text3); margin-top: 0.1rem; }
 
-/* Visibility badge */
 .col-vis-badge {
   display: inline-flex; align-items: center; gap: 0.25rem;
   font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
@@ -96,7 +86,6 @@
 .col-vis-badge.shared  { background: #eaf5ff; color: #1a6fa8; }
 .col-vis-badge.private { background: var(--bg); color: var(--text3); border: 1px solid var(--border); }
 
-/* ── New Collection placeholder card ── */
 .col-card-new {
   border: 2px dashed var(--border); border-radius: 14px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -114,7 +103,6 @@
 }
 .col-card-new-label { font-size: 0.85rem; font-weight: 600; }
 
-/* CREATE / RENAME MODAL EXTRAS */
 .field-group { margin-bottom: 1rem; }
 .field-label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text2); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.6px; }
 .field-input {
@@ -125,7 +113,6 @@
 }
 .field-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,79,207,0.12); }
 
-/* Photo picker inside modal */
 .photo-picker {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
   gap: 0.5rem; max-height: 200px; overflow-y: auto;
@@ -148,7 +135,6 @@
   display: flex; align-items: center; justify-content: center;
 }
 
-/* Visibility toggle */
 .vis-toggle { display: flex; gap: 0.5rem; }
 .vis-btn {
   flex: 1; padding: 0.5rem; border-radius: 8px;
@@ -159,10 +145,8 @@
 .vis-btn.active { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); }
 .vis-btn:hover  { border-color: var(--accent); color: var(--accent); }
 
-/* MOBILE COLLECTIONS */
 @media (max-width: 700px) {
 
-  /* Toolbar stacks vertically */
   .col-toolbar { flex-direction: column; align-items: flex-start; padding: 0 1rem; }
   .col-toolbar-left { flex-direction: column; align-items: flex-start; width: 100%; gap: 0.6rem; }
 
@@ -173,13 +157,11 @@
 
   .sort-wrap { align-self: flex-end; }
 
-  /* Single-column card list on mobile — matches screenshot */
   .col-grid {
     grid-template-columns: 1fr;
     gap: 0; padding: 0;
   }
 
-  /* Mobile card: horizontal layout (mosaic left + info right) */
   .col-card {
     border-radius: 0; border: none;
     border-bottom: 1px solid var(--border);
@@ -188,19 +170,16 @@
   }
   .col-card:hover { transform: none; box-shadow: none; }
 
-  /* Mosaic takes full width, taller on mobile */
   .col-mosaic { aspect-ratio: 4 / 3; }
 
   .col-card-body { padding: 0.75rem 1rem; }
   .col-card-name { font-size: 1.05rem; }
 
-  /* Arrow → on the right of each card row (like screenshot) */
   .col-card-header::after {
     content: '→'; color: var(--accent); font-size: 1rem; font-weight: 600;
     flex-shrink: 0; margin-left: 0.5rem;
   }
 
-  /* New collection card at bottom of list */
   .col-card-new {
     border-radius: 0; border: none;
     border-top: 2px dashed var(--border);
@@ -209,6 +188,5 @@
   }
   .col-card-new-icon { width: 36px; height: 36px; font-size: 1rem; flex-shrink: 0; }
 
-  /* Photo picker in modal */
   .photo-picker { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
 }
