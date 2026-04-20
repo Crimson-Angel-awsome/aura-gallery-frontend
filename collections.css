@@ -62,7 +62,6 @@
   color: var(--text3); font-size: 1.2rem;
 }
 
-/* Card body */
 .col-card-body { padding: 0.95rem 1rem 0.85rem; }
 .col-card-header { display: flex; align-items: flex-start; justify-content: space-between; }
 .col-card-name {
@@ -159,7 +158,6 @@
 
   .sort-wrap { align-self: flex-end; }
 
-  /* Single-column card list on mobile — matches screenshot */
   .col-grid {
     grid-template-columns: 1fr;
     gap: 0; padding: 0;
@@ -174,13 +172,11 @@
   }
   .col-card:hover { transform: none; box-shadow: none; }
 
-  /* Mosaic takes full width, taller on mobile */
   .col-mosaic { aspect-ratio: 4 / 3; }
 
   .col-card-body { padding: 0.75rem 1rem; }
   .col-card-name { font-size: 1.05rem; }
 
-  /* Arrow → on the right of each card row (like screenshot) */
   .col-card-header::after {
     content: '→'; color: var(--accent); font-size: 1rem; font-weight: 600;
     flex-shrink: 0; margin-left: 0.5rem;
@@ -195,6 +191,5 @@
   }
   .col-card-new-icon { width: 36px; height: 36px; font-size: 1rem; flex-shrink: 0; }
 
-  /* Photo picker in modal */
   .photo-picker { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
 }

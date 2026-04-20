@@ -277,9 +277,6 @@ function renderPhotoPicker() {
   });
 }
 
-/* ─────────────────────────────────────────
-   DELETE COLLECTION
-───────────────────────────────────────── */
 function deleteCollection(id) {
   collections = collections.filter(function(c) { return c.id !== id; });
   saveState();
@@ -445,9 +442,6 @@ function gridClickHandler(e) {
   }
 }
 
-/* ─────────────────────────────────────────
-   UTILS
-───────────────────────────────────────── */
 function findCollection(id) {
   for (let i = 0; i < collections.length; i++) { if (collections[i].id === id) return collections[i]; }
   return null;
@@ -477,7 +471,4 @@ function showToast(msg, type) {
   toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3000);
 }
 
-/* ─────────────────────────────────────────
-   BOOT
-───────────────────────────────────────── */
 init();

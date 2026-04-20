@@ -336,7 +336,6 @@ function renderFeed() {
     html += '</div></div>';
   });
 
-  /* Remove old listener before re-adding */
   photoFeed.removeEventListener('click', feedClickHandler);
   photoFeed.innerHTML = html;
   photoFeed.addEventListener('click', feedClickHandler);

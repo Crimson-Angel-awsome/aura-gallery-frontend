@@ -424,48 +424,36 @@ body { display: flex; }
   html, body { overflow: hidden; }
   body { display: block; }
 
-  /* Sidebar slides in from left */
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .sidebar-close { display: flex; }
 
   .main { margin-left: 0; }
 
-  /* Topbar */
   .topbar { height: 54px; padding: 0 1rem; border-bottom: none; background: var(--bg); }
   .topbar-page { font-size: 1.15rem; font-weight: 800; text-transform: none; color: var(--text); }
 
-  /* Hide desktop topbar items */
   .icon-btn.notif-btn, .avatar { display: none; }
   .upload-btn { display: none; }
 
-  /* Show hamburger */
   .mob-hamburger { display: flex; }
 
-  /* Mobile storage card */
   .mob-storage-card { display: flex; }
 
-  /* Hide desktop plan row */
   .plan-row { display: none; }
 
-  /* Content padding */
   .content { padding: 0.25rem 0 calc(var(--mob-nav-h) + 1.5rem); }
   .content::-webkit-scrollbar { display: none; }
 
-  /* Hide desktop storage widget */
   .storage-widget { display: none; }
 
-  /* Empty state */
   .empty-state { padding: 3rem 1rem 1rem; }
 
-  /* FAB & bottom nav */
   .mob-fab { display: flex; }
   .mob-bottom-nav { display: flex; }
 
-  /* Toast above bottom nav */
   .toast { bottom: calc(var(--mob-nav-h) + 0.75rem); max-width: calc(100vw - 2rem); white-space: normal; text-align: center; }
 
-  /* Modal → bottom sheet */
   .modal-backdrop { align-items: flex-end; padding: 0; }
   .modal {
     border-radius: 20px 20px 0 0;
@@ -482,7 +470,6 @@ body { display: flex; }
   .pc-name { font-size: 0.95rem; margin-bottom: 0; }
   .pc-limit { font-size: 0.8rem; margin-bottom: 0; }
 
-  /* Lightbox */
   .lb-img { max-width: 100vw; max-height: 80vh; border-radius: 0; }
   .lb-close { top: 0.75rem; right: 0.75rem; }
 }
