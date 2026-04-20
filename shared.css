@@ -19,7 +19,6 @@
   --shadow-md:   0 4px 24px rgba(0,0,0,0.10);
 }
 
-/* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
@@ -37,7 +36,6 @@ input[type="file"] { display: none; }
 
 body { display: flex; }
 
-/* SIDEBAR OVERLAY (mobile) */
 .sidebar-overlay {
   display: none;
   position: fixed;

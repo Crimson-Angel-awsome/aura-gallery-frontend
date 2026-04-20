@@ -11,13 +11,13 @@ const PLANS = {
 };
 
 let currentPlan  = 'basic';
-let photos       = [];          /* from library localStorage */
+let photos       = [];
 let collections  = [];
 let currentFilter = 'all';
 let currentSort   = 'modified';
-let activeColId   = null;       /* id of collection whose context menu is open */
-let editingColId  = null;       /* null = creating, string = renaming */
-let selectedPhotoIds = [];      /* photo ids selected in the picker */
+let activeColId   = null;
+let editingColId  = null;
+let selectedPhotoIds = [];
 let currentVisibility = 'private';
 let toastTimer = null;
 
