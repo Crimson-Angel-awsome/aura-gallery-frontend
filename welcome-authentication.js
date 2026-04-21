@@ -36,6 +36,10 @@ if (form) {
       passwordInput.focus();
       return;
     }
+    function loginUser(event) {
+  event.preventDefault();
+  console.log("Login function working");
+}
 
     // Make API call to login
     try {
@@ -51,6 +55,7 @@ if (form) {
 
       if (response.ok) {
         alert('Login successful!');
+         window.location.href = "library.html";
         localStorage.setItem('token', data.token); // Store JWT token
         // Optionally redirect to gallery page
         // window.location.href = 'gallery.html';
