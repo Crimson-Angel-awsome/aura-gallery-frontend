@@ -8,6 +8,7 @@ body {
 
 .container {
   display: flex;
+  flex-direction: row;
 }
 
 .sidebar {
@@ -293,4 +294,41 @@ label {
 
 .deactivate-btn:hover {
   background: orangered;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .content-row {
+    flex-direction: column;
+  }
+
+  .bottom-row {
+    flex-direction: column;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+  .hero-img{
+    border-radius: 60px;
+    
+  }
 }

@@ -15,7 +15,7 @@ app.use(express.static('.')); // Serve all static files from project root
 
 // Serve index.html for the root path
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/pages/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 // In-memory user store (for demo purposes)

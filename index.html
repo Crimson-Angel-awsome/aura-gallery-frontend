@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log-in</title>
-    <link rel="shortcut icon" href="https://fonts.google.com/icons" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/welcome-authentication.css">
+    <link rel="stylesheet" href="welcome-authentication.css">
 </head>
 <body>
     <section class="Gallery">
@@ -33,7 +33,7 @@
             <i class="fa-brands fa-apple"></i>Apple</button>
         </div>
         <span>OR LOGIN WITH EMAIL</span>
-        <form action="">
+        <form action="" onsubmit="loginUser(event)">
             <div id="lg_details">
                 <div>
                     <label for="email">EMAIL ADDRESS</label><br>
@@ -52,10 +52,10 @@
                 </div>
             </div>
             <button class="sign-in-btn" type="submit">Sign in to Aura</button><br>
-            <span> Not a member yet?<a href="../pages/profile.html">Join the Gallery</a> </span>
+            <span> Not a member yet?<a href="profile.html">Join the Gallery</a> </span>
         </form>
 
     </section>
-    <script src="../scripts/welcome-authentication.js"></script>
+    <script src="welcome-authentication.js"></script>
 </body>
 </html>
