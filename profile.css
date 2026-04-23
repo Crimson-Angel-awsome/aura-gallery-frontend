@@ -268,33 +268,17 @@ label {
 }
 
 .toggle, .option {
-  background: royalblue;
-  color: white;
+  color: black;
   padding: 8px 12px;
   border-radius: 6px;
   text-align: center;
   font-weight: bold;
   width: fit-content;
 }
-
-.mini-card.danger {
-  background: white;
-  border: 1px solid red;
+.material-symbols-outlined{
+  color: royalblue;
 }
 
-.deactivate-btn {
-  background: red;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.deactivate-btn:hover {
-  background: orangered;
-}
 
 @media (max-width: 768px) {
   .container {
