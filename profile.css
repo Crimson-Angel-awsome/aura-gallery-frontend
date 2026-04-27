@@ -278,6 +278,9 @@ label {
 .material-symbols-outlined{
   color: royalblue;
 }
+.mobile-img{
+  display: none;
+}
 
 
 @media (max-width: 768px) {
@@ -314,5 +317,11 @@ label {
   .hero-img{
     border-radius: 60px;
     
+  }
+  .storage-card{
+    background-color: white;
+  }
+  .hero-img{
+    display: none;
   }
 }
