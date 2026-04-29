@@ -36,36 +36,36 @@ if (form) {
       passwordInput.focus();
       return;
     }
-    function loginUser(event) {
-  event.preventDefault();
-  console.log("Login function working");
-}
+  alert('Login successful!');
+    window.location.href = "library.html";
+    localStorage.setItem('token', 'mock-token');
+
 
     // Make API call to login
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+//     try {
+//       const response = await fetch('/api/login', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password }),
+//       });
 
-      const data = await response.json();
+//       const data = await response.json();
 
-      if (response.ok) {
-        alert('Login successful!');
-         window.location.href = "library.html";
-        localStorage.setItem('token', data.token); // Store JWT token
-        // Optionally redirect to gallery page
-        // window.location.href = 'gallery.html';
-      } else {
-        alert(data.message || 'Login failed');
-      }
-    } catch (error) {
-      alert('An error occurred. Please try again.');
-      console.error('Login error:', error);
-    }
+//       if (response.ok) {
+//         alert('Login successful!');
+//          window.location.href = "library.html";
+//         localStorage.setItem('token', data.token); // Store JWT token
+//         // Optionally redirect to gallery page
+//         // window.location.href = 'gallery.html';
+//       } else {
+//         alert(data.message || 'Login failed');
+//       }
+//     } catch (error) {
+//       alert('An error occurred. Please try again.');
+//       console.error('Login error:', error);
+//     }
 
     form.reset();
     passwordInput.type = 'password';
