@@ -6,16 +6,18 @@
   <title>Aura Gallery</title>
   <link rel="stylesheet" href="profile.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script src="./profile.js"></script>
 </head>
 
 <body>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="container">
   <aside class="sidebar">
     <h2 class="logo">Aura Gallery</h2>
     <p class="subtitle">THE DIGITAL CURATOR</p>
 
     <ul class="menu">
-      <li><span class="material-symbols-outlined">photo_library</span>Library</li>
+      <li><span class="material-symbols-outlined">photo_library</span> <a href="./collections.html"></a>Library</li>
       <li><span class="material-symbols-outlined">collections_bookmark</span>Collections</li>
       <li><span class="material-symbols-outlined">search</span>Search</li>
       <li class="active"><span class="material-symbols-outlined">person</span>Profile</li>
@@ -26,6 +28,10 @@
 
   <main class="main">
     <header class="topbar">
+      <button class="hamburger" onclick="toggleMenu()">
+  <span class="material-symbols-outlined">menu</span>
+</button>
+
       <a href="#">Upgrade Plan</a>
       <div class="top-actions">
         <span class="material-symbols-outlined">notifications</span>
